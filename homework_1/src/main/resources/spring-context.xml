@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="ResourceMap" class="ru.otus.spring.homework_1.resource.ResourceMap">
+        <constructor-arg name="pathCsvFile" value="testing1.csv"/>
+    </bean>
+
+
+    <bean id="TestDao" class="ru.otus.spring.homework_1.dao.TestDaoImpl"></bean>
+
+    <bean id="TestService" class="ru.otus.spring.homework_1.service.TestServiceImpl">
+        <constructor-arg name="testDao" ref="TestDao"/>
+    </bean>
+
+</beans>
+
