@@ -9,6 +9,10 @@ public class TestScanner {
         System.out.print(question + "\n");
         dispalayListAnswers(listVariantAnswers);
         Scanner scan = new Scanner(System.in);
+        while (!scan.hasNextInt()) {
+            System.out.println("Number answer, please!");
+            scan.nextLine();
+        }
         int number = scan.nextInt();
         return number;
     }
@@ -23,6 +27,9 @@ public class TestScanner {
     public static void runScannerFioPerson(String question) {
         System.out.print(question + "\n");
         Scanner scan = new Scanner(System.in);
-        String name = scan.nextLine();
+        while (scan.hasNextInt()) {
+            System.out.println("String english FIO, please!");
+            scan.nextLine();
+        }
     }
 }

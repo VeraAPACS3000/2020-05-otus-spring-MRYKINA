@@ -43,8 +43,7 @@ public class TestDaoImpl implements TestDao {
         return listObTest;
     }
 
-
-
+    @Override
     public String resultAnswerPerson(List<Test> listObTest) {
         int countRightAnswers = calculateCountRightAnswers(listObTest);
         String resultMessage = checkCountRightAnswers(countRightAnswers, countMustRightAnswer);

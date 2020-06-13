@@ -8,19 +8,10 @@ public class Test {
     private String textQuestion;
     private int numberRightAnswer;
     private int numberAnswerPerson;
-    private List<String> listVariantsAnswer = null;
+    private List<String> listVariantsAnswer = new ArrayList<>();
 
     public Test() {
-        listVariantsAnswer = new ArrayList<>();
-    }
 
-    public Test(int numberAnswerPerson, String textQuestion, int numberQuestion,
-                int numberRightAnswer, List<String> listVariantsAnswer) {
-        this.numberQuestion = numberQuestion;
-        this.textQuestion = textQuestion;
-        this.numberRightAnswer = numberRightAnswer;
-        this.numberAnswerPerson = numberAnswerPerson;
-        this.listVariantsAnswer = listVariantsAnswer;
     }
 
     public void setNumberAnswerPerson(int inNumberAnswerPerson) {
@@ -57,5 +48,9 @@ public class Test {
 
     public int getNumberAnswerPerson() {
         return numberAnswerPerson;
+    }
+
+    public int getNumberQuestion() {
+        return numberQuestion;
     }
 }

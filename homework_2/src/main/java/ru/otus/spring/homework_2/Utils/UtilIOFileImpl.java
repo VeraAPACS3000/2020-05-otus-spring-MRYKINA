@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Scanner;
 
 //@Component
-public class UtilIOFile implements Utils{
+public class UtilIOFileImpl implements Utils{
     private final String nameFile;
 
-    public UtilIOFile(String inNameFile) {
+    public UtilIOFileImpl(String inNameFile) {
         this.nameFile = inNameFile;
     }
 

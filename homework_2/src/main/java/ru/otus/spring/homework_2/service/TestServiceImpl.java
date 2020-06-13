@@ -10,8 +10,8 @@ import java.util.List;
 public class TestServiceImpl implements TestService {
     TestDao testDao;
 
-    public TestServiceImpl(TestDao inTestDaoBuildContainerTest) {
-        this.testDao = inTestDaoBuildContainerTest;
+    public TestServiceImpl(TestDao inTestDao) {
+        this.testDao = inTestDao;
     }
 
     public String printQuestionWithResult() throws IOException {

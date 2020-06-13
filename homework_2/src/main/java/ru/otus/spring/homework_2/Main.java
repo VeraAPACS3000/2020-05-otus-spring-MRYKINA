@@ -22,6 +22,7 @@ public class Main {
         managerAuthenticationUser.showQuestionPersonalData();
 
         TestService testService = annotationConfig.getBean(TestService.class);
+
         System.out.println(testService.printQuestionWithResult());
     }
 }
