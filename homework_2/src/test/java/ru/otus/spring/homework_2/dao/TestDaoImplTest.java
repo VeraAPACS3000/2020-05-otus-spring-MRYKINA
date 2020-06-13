@@ -9,10 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
-import static ru.otus.spring.homework_2.Utils.Constants.*;
-import static ru.otus.spring.homework_2.Utils.Constants.HEAD_END_BLOCK_QUESTION_FROM_FILE;
-
 @DisplayName("Класс TestDaoImplTest")
 public class TestDaoImplTest {
 
@@ -40,38 +36,12 @@ public class TestDaoImplTest {
         listString.add(0, "END");
     }
 
-    //старая попытка
     @org.junit.jupiter.api.Test
-    void printQuestionWithResult() throws IOException {
-        when(testDaoImpl.parseListTest()).thenReturn(test);
+    //тест метода - с четко своей задачей
+    void getContainerWithTests() throws IOException {
+        //в методе внутри есть оболочка this.utilIOFile.getListStringsFromFile();
+        //как ее в тесте мокируют? я же не создам в этом тест-классе поле  @Mock utilIOFile
+        //assert(
     }
 }
 
-class testParseListTest{
-    /*
-          Здесь весь код PRIVATE метода parseListTest из класса TestDaoImpl
-   */
-
-    public List<Test> parseListTest(List<String> list) {
-        List<Test> listObTest = new ArrayList<Test>();
-        Test test = new Test();
-        int nextString = 1;
-        int numberQuestion = 0;
-        for (int i = 0; i < list.size(); i++) {
-            String string = list.get(i);
-            if (string.equals(HEAD_QUESTION_FROM_FILE)) {
-                test.setTextQuestion(list.get(i + nextString));
-            } else if (string.equals(HEAD_ANSWER_FROM_FILE)) {
-                test.setListVariantsAnswer(list.get(i + nextString));
-            } else if (string.equals(HEAD_TRUEANSWER_FROM_FILE)) {
-                test.setNumberRightAnswer(Integer.parseInt(list.get(i + nextString)));
-            } else if (string.equals(HEAD_END_BLOCK_QUESTION_FROM_FILE)) {
-                ++numberQuestion;
-                test.setNumberQuestion(numberQuestion);
-                listObTest.add(test);
-                test = new Test();
-            }
-        }
-        return listObTest;
-    }
-}

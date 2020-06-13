@@ -18,14 +18,14 @@ public class TestDaoImpl implements TestDao {
         this.countMustRightAnswer = inCountMustRightAnswer;
     }
 
+    /*
+    вот у меня сервис, который нужно затестить:
+     */
     @Override
     public List<Test> getContainerWithTests() throws IOException {
-        List<String> list = this.utilIOFile.getListStringsFromFile();
-        List<Test> listResult = parseListTest(list);
-        return listResult;
-    }
-
-    private List<Test> parseListTest(List<String> list) {
+        List<String> list = this.utilIOFile.getListStringsFromFile();//мне вот с этой штукой что делать?
+                                                                    //getListStringsFromFile - это оболочка
+                                                                    // как её в тесте мокируют, если она здесь внутри метода?
         List<Test> listObTest = new ArrayList<Test>();
         Test test = new Test();
         int nextString = 1;
@@ -47,6 +47,8 @@ public class TestDaoImpl implements TestDao {
         }
         return listObTest;
     }
+
+
 
     public String resultAnswerPerson(List<Test> listObTest) {
         int countRightAnswers = calculateCountRightAnswers(listObTest);
