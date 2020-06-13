@@ -1,6 +1,6 @@
 package ru.otus.spring.homework_2.dao;
 
-import ru.otus.spring.homework_2.Utils.UtilIOFile;
+import ru.otus.spring.homework_2.Utils.Utils;
 import ru.otus.spring.homework_2.domain.Test;
 
 import java.io.IOException;
@@ -10,22 +10,17 @@ import java.util.List;
 import static ru.otus.spring.homework_2.Utils.Constants.*;
 
 public class TestDaoImpl implements TestDao {
-    private final UtilIOFile utilIOFile;
+    private final Utils utilIOFile;
     private final int countMustRightAnswer;
 
-    public TestDaoImpl(UtilIOFile utilIOFile, int inCountMustRightAnswer) {
+    public TestDaoImpl(Utils utilIOFile, int inCountMustRightAnswer) {
         this.utilIOFile = utilIOFile;
         this.countMustRightAnswer = inCountMustRightAnswer;
     }
 
-    /*
-    вот у меня сервис, который нужно затестить:
-     */
     @Override
     public List<Test> getContainerWithTests() throws IOException {
-        List<String> list = this.utilIOFile.getListStringsFromFile();//мне вот с этой штукой что делать?
-                                                                    //getListStringsFromFile - это оболочка
-                                                                    // как её в тесте мокируют, если она здесь внутри метода?
+        List<String> list = this.utilIOFile.getListStringsFromFile();
         List<Test> listObTest = new ArrayList<Test>();
         Test test = new Test();
         int nextString = 1;
