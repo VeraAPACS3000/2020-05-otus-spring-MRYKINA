@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Test {
+
+    private final List<String> listVariantsAnswer = new ArrayList<>();
     private int numberQuestion;
     private String textQuestion;
     private int numberRightAnswer;
     private int numberAnswerPerson;
-    private List<String> listVariantsAnswer = new ArrayList<>();
 
     public Test() {
 

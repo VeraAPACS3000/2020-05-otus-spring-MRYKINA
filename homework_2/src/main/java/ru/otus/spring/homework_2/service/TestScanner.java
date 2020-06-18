@@ -1,4 +1,4 @@
-package ru.otus.spring.homework_2.Utils;
+package ru.otus.spring.homework_2.service;
 
 import java.util.List;
 import java.util.Scanner;

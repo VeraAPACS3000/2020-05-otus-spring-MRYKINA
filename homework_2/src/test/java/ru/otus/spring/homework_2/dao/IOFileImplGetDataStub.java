@@ -1,16 +1,14 @@
-package ru.otus.spring.homework_2.Utils.Fake;
-
-import ru.otus.spring.homework_2.Utils.Utils;
+package ru.otus.spring.homework_2.dao;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UtilIOFileImplFake implements Utils {
+public class IOFileImplGetDataStub implements IOFile {
 
     private final String nameFile;
 
-    public UtilIOFileImplFake(String inNameFile) {
+    public IOFileImplGetDataStub(String inNameFile) {
         this.nameFile = inNameFile;
     }
 

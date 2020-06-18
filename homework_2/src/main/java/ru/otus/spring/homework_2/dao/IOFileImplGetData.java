@@ -1,4 +1,7 @@
-package ru.otus.spring.homework_2.Utils;
+package ru.otus.spring.homework_2.dao;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,11 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//@Component
-public class UtilIOFileImpl implements Utils{
+@Component
+public class IOFileImplGetData implements IOFile {
+
     private final String nameFile;
 
-    public UtilIOFileImpl(String inNameFile) {
+    public IOFileImplGetData(@Value("${settings.fileQuestion}") String inNameFile) {
         this.nameFile = inNameFile;
     }
 

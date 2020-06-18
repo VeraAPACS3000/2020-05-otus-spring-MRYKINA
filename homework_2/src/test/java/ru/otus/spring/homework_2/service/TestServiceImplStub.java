@@ -1,18 +1,23 @@
-package ru.otus.spring.homework_2.service.Fakes;
+package ru.otus.spring.homework_2.service;
 
 import ru.otus.spring.homework_2.dao.TestDao;
 import ru.otus.spring.homework_2.domain.Test;
-import ru.otus.spring.homework_2.service.TestService;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestServiceImplFake implements TestService {
-    TestDao testDao;
+public class TestServiceImplStub implements TestService {
+    private TestDao testDao;
+    private String questionFirstName;
+    private String questionLastName;
+    private String questionMiddleName;
 
-    public TestServiceImplFake(TestDao inTestDao) {
+    public TestServiceImplStub(TestDao inTestDao, String questionFirstName, String questionLastName, String questionMiddleName) {
         this.testDao = inTestDao;
+        this.questionFirstName = questionFirstName;
+        this.questionLastName = questionLastName;
+        this.questionMiddleName = questionMiddleName;
     }
 
     @Override
@@ -22,7 +27,7 @@ public class TestServiceImplFake implements TestService {
         for (int i = 0; i < listObTest.size(); i++) {
             test = listObTest.get(i);
             int numberAnswerPerson = 5;//fake
-                    /*Здесь оболочка пользовательский ввод TestScanner.runScannerAnswerPerson(test.getTextQuestion(), test.getListVariantsAnswer());*/
+            /*Здесь оболочка пользовательский ввод TestScanner.runScannerAnswerPerson(test.getTextQuestion(), test.getListVariantsAnswer());*/
             test.setNumberAnswerPerson(numberAnswerPerson);
         }
         String result = "Success completed"; /*Было testDao.resultAnswerPerson(listObTest);*/

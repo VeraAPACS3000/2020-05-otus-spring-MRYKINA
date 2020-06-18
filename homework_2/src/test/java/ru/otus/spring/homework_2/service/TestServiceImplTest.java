@@ -7,7 +7,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.spring.homework_2.dao.TestDao;
-import ru.otus.spring.homework_2.service.Fakes.TestServiceImplFake;
 
 import java.io.IOException;
 
@@ -20,20 +19,20 @@ class TestServiceImplTest {
     @Mock
     private TestDao testDao;
 
-    private TestServiceImplFake testServiceImplFake;
+    private String questionFirstName;
+    private String questionLastName;
+    private String questionMiddleName;
+
+    private TestServiceImplStub testServiceImplStub;
 
     @BeforeEach
     void prepareDataTest(){
-        testServiceImplFake = new TestServiceImplFake(testDao);
+        testServiceImplStub = new TestServiceImplStub(testDao, questionFirstName, questionLastName, questionMiddleName);
     }
 
     @DisplayName("Тест printQuestionWithResult. Пользователь поотвечал и получил сообщение ок/не ок")
     @Test
-    /* самый бесполезный тест
-    * printQuestionWithResult() - внутри фейк на фейке
-    * более полезнее тест на testDao.resultAnswerPerson, класс TestDaoImpl
-    * */
     void testPrintQuestionWithResult() throws IOException {
-        assertEquals("успешно пройден", testServiceImplFake.printQuestionWithResult());
+        assertEquals("Success completed", testServiceImplStub.printQuestionWithResult());
     }
 }
