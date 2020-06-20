@@ -1,6 +1,6 @@
 package ru.otus.spring.homework_2.dao;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import ru.otus.spring.homework_2.domain.Test;
 
@@ -11,16 +11,21 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 @DisplayName("Класс TestDaoImplTest")
 public class TestDaoImplTest {
 
-    private static TestDaoImpl testDaoImpl;
+    private TestDaoImpl testDaoImpl;
 
-    @BeforeAll
-    static void setUp() {
-        IOFile IOFileStub = new IOFileImplGetDataStub("stubNameFile");//stub instedof mock
-        testDaoImpl = new TestDaoImpl(IOFileStub, 3);
+    @BeforeEach
+    void setUp() throws IOException {
+        IOFile ioFileMock = mock(IOFile.class);
+        //getListStringsFromFile ему нужно будет вызвать в TestDaoImpl
+        given(ioFileMock.getListStringsFromFile()).willReturn(List.of("Question", "How much will it be 2 plus 2?",
+                "Answer", "4", "Answer", "2", "Answer", "22", "TrueAnswer", "1", "END"));
+        testDaoImpl = new TestDaoImpl(ioFileMock, 3);
     }
 
     @DisplayName("Тест getContainerWithTests. Возвращает список наших Тестов, не null")
@@ -54,9 +59,8 @@ public class TestDaoImplTest {
     @DisplayName("Тест getContainerWithTests. Значения в списке вариантов ответов Test ожидаемы")
     @org.junit.jupiter.api.Test
     void shouldHaveEqualsValuesListAnswer() throws IOException {
-        List<Test> listTest = null;
-        listTest = testDaoImpl.getContainerWithTests();
-        Test testFromList= listTest.get(0);
+        List<Test> listTest = testDaoImpl.getContainerWithTests();
+        Test testFromList = listTest.get(0);
         List<String> listAnswer = testFromList.getListVariantsAnswer();
 
         assertAll("Answer",

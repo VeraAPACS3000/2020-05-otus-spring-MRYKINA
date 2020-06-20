@@ -1,30 +1,29 @@
 package ru.otus.spring.homework_2.service;
 
-import org.springframework.stereotype.Component;
-import ru.otus.spring.homework_2.dao.TestDao;
+import ru.otus.spring.homework_2.dao.ITestDao;
 import ru.otus.spring.homework_2.domain.Test;
 
 import java.io.IOException;
 import java.util.List;
 
-@Component
-public class TestServiceImpl implements TestService {
+public class TestServiceImpl implements ITestService {
 
-    private final TestDao testDao;
+    private final ITestDao testDao;
+    private final TestScanner testScanner;
     private final String questionFirstName;
     private final String questionLastName;
     private final String questionMiddleName;
 
-    public TestServiceImpl(TestDao inTestDao, String inQuestionFirstName, String inQuestionLastName, String inQuestionMiddleName) {
+    public TestServiceImpl(ITestDao inTestDao, TestScanner testScanner, String inQuestionFirstName,
+                           String inQuestionLastName, String inQuestionMiddleName) {
         this.testDao = inTestDao;
+        this.testScanner = testScanner;
         this.questionFirstName = inQuestionFirstName;
         this.questionLastName = inQuestionLastName;
         this.questionMiddleName = inQuestionMiddleName;
     }
 
-    public String printQuestionWithResult() throws IOException {
-        //понимаю, что один метод - одно действие, но здесь походу архитектуру всего приложения необходимо менять
-        //чтобы убрать отсюда этот вызов метода
+    public String runTestingPerson() throws IOException {
         printsQuestionPersonalData();
 
         List<Test> listObTest = this.testDao.getContainerWithTests();
@@ -32,7 +31,7 @@ public class TestServiceImpl implements TestService {
         for (int i = 0; i < listObTest.size(); i++) {
             test = listObTest.get(i);
             int numberAnswerPerson =
-                    TestScanner.runScannerAnswerPerson(test.getTextQuestion(), test.getListVariantsAnswer());
+                    testScanner.runScannerAnswerPerson(test.getTextQuestion(), test.getListVariantsAnswer());
             test.setNumberAnswerPerson(numberAnswerPerson);
         }
         String result = testDao.resultAnswerPerson(listObTest);
@@ -43,8 +42,8 @@ public class TestServiceImpl implements TestService {
     }
 
     private void printsQuestionPersonalData() {
-        TestScanner.runScannerFioPerson(this.questionFirstName);
-        TestScanner.runScannerFioPerson(this.questionLastName);
-        TestScanner.runScannerFioPerson(this.questionMiddleName);
+        testScanner.runScannerFioPerson(this.questionFirstName);
+        testScanner.runScannerFioPerson(this.questionLastName);
+        testScanner.runScannerFioPerson(this.questionMiddleName);
     }
 }

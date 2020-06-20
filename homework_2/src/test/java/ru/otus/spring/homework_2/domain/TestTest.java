@@ -30,8 +30,7 @@ class TestTest {
         for (int i = 0; i < stringListTestSetVariantAnswer.size(); i++) {
             test.setListVariantsAnswer(stringListTestSetVariantAnswer.get(i));
         }
-        assertThat(test.getNumberQuestion())
-                .isNotNull();
+        assertThat(test.getListVariantsAnswer()).isNotNull();
     }
 
     @DisplayName("Корректно сеттится поле NumberQuestion")

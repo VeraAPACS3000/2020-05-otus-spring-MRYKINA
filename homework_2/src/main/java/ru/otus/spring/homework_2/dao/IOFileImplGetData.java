@@ -1,6 +1,7 @@
 package ru.otus.spring.homework_2.dao;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@PropertySource("classpath:settings")
 @Component
 public class IOFileImplGetData implements IOFile {
 

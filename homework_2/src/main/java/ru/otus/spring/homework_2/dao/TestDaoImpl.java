@@ -1,6 +1,5 @@
 package ru.otus.spring.homework_2.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.otus.spring.homework_2.domain.Test;
 
 import java.io.IOException;
@@ -9,11 +8,11 @@ import java.util.List;
 
 import static ru.otus.spring.homework_2.Utils.Constants.*;
 
-public class TestDaoImpl implements TestDao {
+//@Component
+public class TestDaoImpl implements ITestDao {
     private final IOFile utilIOFile;
     private final int countMustRightAnswer;
 
-    @Autowired
     public TestDaoImpl(IOFile utilIOFile, int inCountMustRightAnswer) {
         this.utilIOFile = utilIOFile;
         this.countMustRightAnswer = inCountMustRightAnswer;
