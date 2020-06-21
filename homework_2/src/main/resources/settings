@@ -1,0 +1,5 @@
+settings.fileQuestion=testing1.csv
+settings.countMustRightAnswer=3
+settings.questionName1=What's your first name?
+settings.questionName2=What's your last name?
+settings.questionName3=What's your middle name?
