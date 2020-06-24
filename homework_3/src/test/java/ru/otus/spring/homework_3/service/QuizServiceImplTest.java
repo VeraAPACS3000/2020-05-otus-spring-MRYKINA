@@ -2,10 +2,9 @@ package ru.otus.spring.homework_3.service;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.otus.spring.homework_3.dao.IOFile;
 import ru.otus.spring.homework_3.dao.QuizDao;
 import ru.otus.spring.homework_3.domain.Quiz;
@@ -19,22 +18,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
 
-@ExtendWith(MockitoExtension.class)
 @DisplayName("Класс QuizDaoImplTest задаёт вопросы, по ответам даёт результат о тестировании пользователя")
+@SpringBootTest
 class QuizServiceImplTest {
 
-    @Mock
+    @MockBean
     private QuizDao quizDao;
 
-    private QuizScanner quizScanner = mock(QuizScanner.class);
+    @MockBean
+    private QuizScanner quizScanner;
 
     @Autowired
     private LocalizationService localizationService;
 
-    private IOFile ioFileMock = mock(IOFile.class);
+    @MockBean
+    private IOFile ioFileMock;
 
+    @Autowired
     private QuizServiceImpl quizServiceImpl;
 
     /*
@@ -62,8 +63,6 @@ class QuizServiceImplTest {
 
         //because runScannerFioPerson - void. use doNothing
         doNothing().when(quizScanner).runScannerFioPerson(any());
-
-        quizServiceImpl = new QuizServiceImpl(quizDao, quizScanner, localizationService, ioFileMock);
 
         assertEquals("Test done successfully!", quizServiceImpl.runQuizPerson());
     }

@@ -3,7 +3,9 @@ package ru.otus.spring.homework_3.dao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.otus.spring.homework_3.config.YamlPropsSettings;
 import ru.otus.spring.homework_3.domain.Quiz;
 import ru.otus.spring.homework_3.service.LocalizationService;
@@ -16,29 +18,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
 
 @DisplayName("Класс QuizDaoImplTest")
 @SpringBootTest
 public class QuizDaoImplTest {
 
+    @MockBean
+    YamlPropsSettings yamlPropsSettings;
+
+    @MockBean
+    LocalizationService localizationService;
+
+    @MockBean
+    IOFile ioFileMock;
+
+    @Autowired
     private QuizDaoImpl testDaoImpl;
 
     @BeforeEach
-    void setUp() throws IOException {
-        IOFile ioFileMock = mock(IOFile.class);
-        YamlPropsSettings yamlPropsSettings = mock(YamlPropsSettings.class);
-        LocalizationService localizationService = mock(LocalizationService.class);
-
+    void setUp() {
         given(ioFileMock.getListQuestionTesting()).willReturn(List.of("Question", "How much will it be 2 plus 2?",
                 "Answer", "4", "Answer", "2", "Answer", "22", "TrueAnswer", "1", "END"));
 
         given(yamlPropsSettings.getCountMustRightAnswer()).willReturn(3);
         given(localizationService.getLocaleResultSuccess()).willReturn("Test done successfully!");
         given(localizationService.getLocaleResultFailed()).willReturn("Test failed!");
-
-        testDaoImpl = new QuizDaoImpl(ioFileMock, yamlPropsSettings, localizationService);
     }
 
     @DisplayName("Должен возвращать ожидаемый вопрос для quiz-теста")

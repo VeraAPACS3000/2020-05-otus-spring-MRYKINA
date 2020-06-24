@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class LocalizationServiceTest {
 
+    @Autowired
     private LocalizationService localizationService;
 
     @Autowired
@@ -28,8 +29,7 @@ public class LocalizationServiceTest {
     public void shouldNameFileQuestionQuizIsCorrect(String language, String country, String resultNameFile) {
         Locale currentLocale = new Locale(language, country);
         Locale.setDefault(currentLocale);
-        System.out.println(Locale.getDefault());
-        LocalizationService localizationService = new LocalizationService(messageSource);
+        localizationService = new LocalizationService(messageSource);
         assertEquals(resultNameFile, localizationService.getLocaleFileQuestionForQuiz());
     }
 
@@ -46,8 +46,7 @@ public class LocalizationServiceTest {
     public void shouldNameFileQuestionPersonIsCorrect(String language, String country, String resultNameFile) {
         Locale currentLocale = new Locale(language, country);
         Locale.setDefault(currentLocale);
-        System.out.println(Locale.getDefault());
-        LocalizationService localizationService = new LocalizationService(messageSource);
+        localizationService = new LocalizationService(messageSource);
         assertEquals(resultNameFile, localizationService.getLocaleFileQuestionPerson());
     }
 
@@ -64,8 +63,7 @@ public class LocalizationServiceTest {
     public void shouldCorrectStringResultQuizSuccess(String language, String country, String resultNameFile) {
         Locale currentLocale = new Locale(language, country);
         Locale.setDefault(currentLocale);
-        System.out.println(Locale.getDefault());
-        LocalizationService localizationService = new LocalizationService(messageSource);
+        localizationService = new LocalizationService(messageSource);
         assertEquals(resultNameFile, localizationService.getLocaleResultSuccess());
     }
 
@@ -82,8 +80,7 @@ public class LocalizationServiceTest {
     public void shouldCorrectStringResultQuizNotSuccess(String language, String country, String resultNameFile) {
         Locale currentLocale = new Locale(language, country);
         Locale.setDefault(currentLocale);
-        System.out.println(Locale.getDefault());
-        LocalizationService localizationService = new LocalizationService(messageSource);
+        localizationService = new LocalizationService(messageSource);
         assertEquals(resultNameFile, localizationService.getLocaleResultFailed());
     }
 
