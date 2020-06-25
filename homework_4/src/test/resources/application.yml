@@ -1,0 +1,9 @@
+application:
+  countMustRightAnswer: "3"
+  locale: ru_RU
+
+#Чтобы в рамках тестов shell не запускался
+spring:
+  shell:
+    interactive:
+      enabled: false
