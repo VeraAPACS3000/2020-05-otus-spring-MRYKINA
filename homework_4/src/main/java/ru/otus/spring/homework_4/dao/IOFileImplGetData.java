@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.otus.spring.homework_4.service.LocalizationService;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -24,7 +24,7 @@ public class IOFileImplGetData implements IOFile {
         try {
             listResult = readFromFile(loadFileQuestionsTesting());
         } catch (Exception e) {
-            throw new GetDataException(e);
+            throw new GetDataException("Error while get data list question quiz", e);
         }
         return listResult;
     }
@@ -35,20 +35,21 @@ public class IOFileImplGetData implements IOFile {
         try {
             listResult = readFromFile(loadFileQuestionsPersonData());
         } catch (Exception e) {
-            throw new GetDataException(e);
+            throw new GetDataException("Error while get data list question person", e);
         }
         return listResult;
     }
 
-    private List<String> readFromFile(File file) throws IOException {
+    private List<String> readFromFile(File file) {
         List<String> listResultStrings = new ArrayList<>();
         if (file.exists()) {
-            try (Scanner scanner = new Scanner(file)) {
+            try {
+                Scanner scanner = new Scanner(file);
                 while (scanner.hasNextLine()) {
                     listResultStrings.add(scanner.nextLine());
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                throw new QuizFileNotFoundException("Error while scanner file file.getName()", e);
             }
         }
         return listResultStrings;

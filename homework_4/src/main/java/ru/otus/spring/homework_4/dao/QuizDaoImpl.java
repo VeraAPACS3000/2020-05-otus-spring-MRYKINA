@@ -26,7 +26,7 @@ public class QuizDaoImpl implements QuizDao {
     public List<Quiz> getContainerWithQuiz() {
         List<Quiz> listObQuiz = null;
         try {
-            List<String> list = this.utilIOFile.getListQuestionTesting();
+            List<String> list = utilIOFile.getListQuestionTesting();
             listObQuiz = new ArrayList<>();
             Quiz quiz = new Quiz();
             int nextString = 1;
@@ -60,9 +60,9 @@ public class QuizDaoImpl implements QuizDao {
     }
 
     private String checkCountRightAnswers(int countRightAnswers, int countMustRightAnswer) {
-        String resultMessage = this.localizationService.getLocaleResultFailed();
+        String resultMessage = localizationService.getLocaleResultFailed();
         if (countRightAnswers >= yamlPropsSettings.getCountMustRightAnswer()) {
-            resultMessage = this.localizationService.getLocaleResultSuccess();
+            resultMessage = localizationService.getLocaleResultSuccess();
         }
         return resultMessage;
     }

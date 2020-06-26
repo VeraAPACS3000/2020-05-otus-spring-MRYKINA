@@ -27,7 +27,7 @@ public class QuizServiceImpl implements QuizService {
         String result = "";
         try {
             printsQuestionPersonalData();
-            List<Quiz> listObQuiz = this.quizDao.getContainerWithQuiz();
+            List<Quiz> listObQuiz = quizDao.getContainerWithQuiz();
             Quiz quiz = null;
             for (int i = 0; i < listObQuiz.size(); i++) {
                 quiz = listObQuiz.get(i);
