@@ -1,0 +1,9 @@
+${AnsiColor.GREEN}
+      _        _           _   _       _  
+ |_| / \ |\/| |_   \    / / \ |_) |/   _) 
+ | | \_/ |  | |_    \/\/  \_/ | \ |\   _) 
+                                          
+Application Name: ${application.title}
+Application Version: ${application.version}
+${AnsiColor.BLUE}Spring Boot${spring-boot.formatted-version}
+${AnsiColor.GREEN}
