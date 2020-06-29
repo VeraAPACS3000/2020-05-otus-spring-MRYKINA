@@ -28,7 +28,7 @@ class QuizServiceImplTest {
     @Mock
     private QuizDao quizDao;
 
-    private QuizScanner quizScanner = mock(QuizScanner.class);
+    private QuizScannerImpl quizScannerImpl = mock(QuizScannerImpl.class);
 
     @Autowired
     private LocalizationService localizationService;
@@ -58,12 +58,12 @@ class QuizServiceImplTest {
 
         given(quizDao.getContainerWithQuiz()).willReturn(List.of(quiz1));
         given(quizDao.resultAnswerPerson(listQuiz)).willReturn("Test done successfully!");
-        given(quizScanner.runScannerAnswerPerson("How much will it be 2 plus 2?", quizListWithAnswer1)).willReturn(1);
+        given(quizScannerImpl.runScannerAnswerPerson("How much will it be 2 plus 2?", quizListWithAnswer1)).willReturn(1);
 
         //because runScannerFioPerson - void. use doNothing
-        doNothing().when(quizScanner).runScannerFioPerson(any());
+        doNothing().when(quizScannerImpl).runScannerFioPerson(any());
 
-        quizServiceImpl = new QuizServiceImpl(quizDao, quizScanner, localizationService, ioFileMock);
+        quizServiceImpl = new QuizServiceImpl(quizDao, quizScannerImpl, localizationService, ioFileMock);
 
         assertEquals("Test done successfully!", quizServiceImpl.runQuizPerson());
     }
