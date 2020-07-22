@@ -1,6 +1,7 @@
 package ru.otus.spring.homework_6.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.homework_6.models.Author;
 import ru.otus.spring.homework_6.repositories.AuthorRepositoriesJpa;
 
@@ -14,6 +15,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
 
+    @Transactional
     @Override
     public Author getAuthorByName(String nameAuthor) {
         Author author = null;

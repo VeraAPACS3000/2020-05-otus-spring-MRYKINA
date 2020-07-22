@@ -34,9 +34,6 @@ public class BookRepositoriesJpaImplTest {
     private static final String INSERT_NAME_AUTHOR = "Steven King";
     private static final String INSERT_NAME_GENRE = "lyrics";
     private static final String INSERT_NAME_BOOK = "test new book";
-    private static final long UPDATE_BY_ID = 1l;
-    private static final int UPDATE_STATUS = 8;
-    private static final long DELETE_BY_ID = 4l;
     private static final long DELETE_SIZE = 1;
 
     @Autowired
@@ -144,42 +141,14 @@ public class BookRepositoriesJpaImplTest {
         assertEquals(actualBook.getName(), INSERT_NAME_BOOK);
     }
 
-    //-----------------update 1 book----------------------------------------------------
-    @DisplayName("статус ПОСЛЕ обновления отличен от ДО")
-    @Test
-    public void shouldUpdateStatusDifferentBeforeAfter() {
-        Book bookBefore = entityManager.find(Book.class, UPDATE_BY_ID);
-        int beforeStatus = bookBefore.getStatus();
-        System.out.println("status before:" + beforeStatus);
-        entityManager.detach(bookBefore);
-        repositoriesJpa.updateStatus(UPDATE_BY_ID, UPDATE_STATUS);
-        Book bookAfter = entityManager.find(Book.class, UPDATE_BY_ID);
-        int afterStatus = bookAfter.getStatus();
-        System.out.println("status after:" + afterStatus);
-        assertNotEquals(beforeStatus, afterStatus);
-    }
-
-    @DisplayName("статус ПОСЛЕ обновления равен ожидаемому значению")
-    @Test
-    public void shouldUpdateStatusEqualsExpectedValue() {
-        Book bookBefore = entityManager.find(Book.class, UPDATE_BY_ID);
-        int beforeStatus = bookBefore.getStatus();
-        System.out.println("status before:" + beforeStatus);
-        entityManager.detach(bookBefore);
-        repositoriesJpa.updateStatus(UPDATE_BY_ID, UPDATE_STATUS);
-        Book bookAfter = entityManager.find(Book.class, UPDATE_BY_ID);
-        int afterStatus = bookAfter.getStatus();
-        System.out.println("status after:" + afterStatus);
-        assertEquals(bookAfter.getStatus(), UPDATE_STATUS);
-    }
-
     //-----------------delete 1 book----------------------------------------------------
     @DisplayName("размер списка книг ДО удаления и ПОСЛЕ отличны на 1")
     @Test
     public void shouldDeleteBook() {
         List<Book> bookListBefore = repositoriesJpa.getAll();
         int sizeBefore = bookListBefore.size();
-        repositoriesJpa.deleteById(DELETE_BY_ID);
+        Book book = entityManager.find(Book.class, 5l);
+        repositoriesJpa.delete(book);
         List<Book> bookListAfter = repositoriesJpa.getAll();
         int sizeAfter = bookListAfter.size();
         assertEquals(sizeBefore - sizeAfter, DELETE_SIZE);

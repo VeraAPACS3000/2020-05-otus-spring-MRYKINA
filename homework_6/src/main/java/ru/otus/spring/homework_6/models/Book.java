@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "BOOKS")
+@Table(name = "books")
 public class Book {
 
     @Id
@@ -24,15 +24,15 @@ public class Book {
     @Column(name = "status", nullable = false)
     private int status;
 
-    @ManyToOne(targetEntity = Author.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_author")
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "id_author", referencedColumnName = "id")
     private Author author;
 
-    @ManyToOne(targetEntity = Genre.class, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "id_genre", referencedColumnName = "id")
     private Genre genre;
 
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_books", referencedColumnName = "id")
     private List<Comment> comments;
 

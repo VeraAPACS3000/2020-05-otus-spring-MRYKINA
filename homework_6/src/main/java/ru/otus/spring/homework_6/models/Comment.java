@@ -18,19 +18,19 @@ public class Comment {
     private long id;
 
     @Column(name = "id_books", nullable = false)
-    private long id_books;
+    private long idBooks;
 
     @Column(name = "text_comment", nullable = true)
-    private String text_comment;
+    private String textComment;
 
     @Override
     public String toString() {
-        return this.text_comment;
+        return this.textComment;
     }
 
-    public Comment(long id_books, String text_comment) {
-        this.id_books = id_books;
-        this.text_comment = text_comment;
+    public Comment(long idBooks, String textComment) {
+        this.idBooks = idBooks;
+        this.textComment = textComment;
     }
 
 }

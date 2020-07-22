@@ -58,19 +58,7 @@ public class BooksRepositoriesJpaImpl implements BooksRepositoriesJpa {
     }
 
     @Override
-    public void updateStatus(long id, int status) {
-        String jpql = "update Book set status = :status where id = :id";
-        Query query = em.createQuery(jpql);
-        query.setParameter("id", id);
-        query.setParameter("status", status);
-        query.executeUpdate();
-    }
-
-    @Override
-    public void deleteById(long id) {
-        String jpql = "delete from Book where id = :id";
-        Query query = em.createQuery(jpql);
-        query.setParameter("id", id);
-        query.executeUpdate();
+    public void delete(Book book) {
+        em.remove(book);
     }
 }

@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import ru.otus.spring.homework_6.models.Book;
-import ru.otus.spring.homework_6.models.Comment;
-import ru.otus.spring.homework_6.services.LibraryService;
+import ru.otus.spring.homework_6.services.BooksService;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -19,12 +18,14 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@DisplayName("Тестирование сервиса библиотеки книг")
+@DisplayName("Тестирование сервиса работы с книгами")
 @SpringBootTest
-public class LibraryServiceImplTest {
+public class BooksServiceImplTest {
 
     private static final long FIND_BY_ID = 1l;
     private static final long UPDATE_BY_ID = 1l;
@@ -36,33 +37,33 @@ public class LibraryServiceImplTest {
     private static final String INSERT_NAME_BOOK = "test new book";
     private static final int UPDATE_STATUS = 8;
     private static final long DELETE_SIZE = 1;
-    private static final String UPDATE_NEW_COMMENT = "update new comment";
+    private static final long DELETE_ONE_BY_ID = 2l;
+
 
     @Autowired
-    LibraryService libraryService;
+    BooksService booksService;
 
     @Autowired
     EntityManager entityManager;
 
-    //Books
     @DisplayName("Должен вернуть все книги")
     @Test
     void shouldReturnListBooks() {
-        final List<Book> booksList = libraryService.getAllBooks();
+        final List<Book> booksList = booksService.getAllBooks();
         assertThat(booksList).isNotNull();
     }
 
     @DisplayName("Выборка всех книг. Должен возвращать корректное число записей")
     @Test
     void shouldCorrectNumberReturnRows() {
-        final List<Book> booksList = libraryService.getAllBooks();
+        final List<Book> booksList = booksService.getAllBooks();
         assertThat(booksList).hasSize(BOOK_LIST_SIZE);
     }
 
     @DisplayName("Выборка всех книг. Поля таблицы не должны быть null/пустыми")
     @Test
     void shouldReturnLisCorrectValuesNotNull() {
-        final List<Book> booksList = libraryService.getAllBooks();
+        final List<Book> booksList = booksService.getAllBooks();
         assertThat(booksList)
                 .allMatch(s -> !s.getName().equals(""))
                 .allMatch(s -> s.getAuthor() != null)
@@ -73,7 +74,7 @@ public class LibraryServiceImplTest {
     @DisplayName("Поиск 1 книги по её id. Должна вернутся запись не null")
     @Test
     public void shouldFindByIdNotNull() {
-        final Optional<Book> actualBook = libraryService.findBookById(FIND_BY_ID);
+        final Optional<Book> actualBook = booksService.findBookById(FIND_BY_ID);
         assertThat(actualBook).isPresent().get().isNotNull();
     }
 
@@ -82,7 +83,7 @@ public class LibraryServiceImplTest {
     @MethodSource("generateDataValuesReturnBook")
     public void shouldFindById(long idBook, String nameBook, String nameAuthor, long idAuthor,
                                String nameGenre, long idGenre) {
-        final Optional<Book> optionalBook = libraryService.findBookById(idBook);
+        final Optional<Book> optionalBook = booksService.findBookById(idBook);
         Book book = optionalBook.get();
         assertEquals(book.getId(), idBook);
         assertEquals(book.getName(), nameBook);
@@ -105,15 +106,15 @@ public class LibraryServiceImplTest {
     @DisplayName("Поиск одной книги по её названию")
     @Test
     void shouldFindExpectedBookByName() {
-        Book book = libraryService.findBookByName(FIND_BY_NAME);
+        Book book = booksService.findBookByName(FIND_BY_NAME);
         assertThat(book).isNotNull();
     }
 
     @DisplayName("добавиться новая книга не NULL")
     @Test
     public void shouldInsertNewBookNotNull() {
-        libraryService.addNewBook(INSERT_NAME_BOOK, INSERT_NAME_AUTHOR, INSERT_NAME_GENRE);
-        Book actualBook = libraryService.findBookByName(INSERT_NAME_BOOK);
+        booksService.addNewBook(INSERT_NAME_BOOK, INSERT_NAME_AUTHOR, INSERT_NAME_GENRE);
+        Book actualBook = booksService.findBookByName(INSERT_NAME_BOOK);
         assertThat(actualBook).isNotNull();
     }
 
@@ -123,65 +124,29 @@ public class LibraryServiceImplTest {
         Book bookBefore = entityManager.find(Book.class, UPDATE_BY_ID);
         int beforeStatus = bookBefore.getStatus();
         entityManager.detach(bookBefore);
-        libraryService.updateStatusBook(UPDATE_BY_ID, UPDATE_STATUS);
+        booksService.updateStatusBook(UPDATE_BY_ID, UPDATE_STATUS);
         Book bookAfter = entityManager.find(Book.class, UPDATE_BY_ID);
         int afterStatus = bookAfter.getStatus();
         assertNotEquals(beforeStatus, afterStatus);
     }
 
-    @DisplayName("удалится книга")
+    @DisplayName("удалится ровно 1 книга")
     @Test
-    public void shouldDeleteBook() {
-        List<Book> bookListBefore = libraryService.getAllBooks();
+    public void shouldDeleteOnlyOneBook() {
+        List<Book> bookListBefore = booksService.getAllBooks();
         int sizeBefore = bookListBefore.size();
-        libraryService.deleteBookById(DELETE_BY_ID);
-        List<Book> bookListAfter = libraryService.getAllBooks();
+        booksService.deleteBookById(DELETE_ONE_BY_ID);
+        List<Book> bookListAfter = booksService.getAllBooks();
         int sizeAfter = bookListAfter.size();
         assertEquals(sizeBefore - sizeAfter, DELETE_SIZE);
     }
 
-    //Comments
-    @DisplayName("Выборка всех комментариев")
+    @DisplayName("удалится книга")
     @Test
-    void shouldReturnListComments() {
-        final List<Comment> commentList = libraryService.getAllComments();
-        assertThat(commentList).isNotNull();
-    }
-
-    @DisplayName("Поиск комментариев по id книги")
-    @Test
-    public void shouldFindAllCommentsByIdBook() {
-        List<Comment> commentList = libraryService.findCommentByIdBook(FIND_BY_ID);
-        assertThat(commentList).isNotNull();
-    }
-
-    @DisplayName("Поиск комментариев по названию книги")
-    @Test
-    public void shouldFindAllCommentsByNameBook() {
-        List<Comment> commentList = libraryService.findCommentsByNameBook(FIND_BY_NAME);
-        assertThat(commentList).isNotNull();
-    }
-
-    @DisplayName("Удаление комментария")
-    @Test
-    public void shouldDeleteComment() {
-        List<Comment> commentList = libraryService.getAllComments();
-        int sizeBefore = commentList.size();
-        libraryService.deleteCommentByIdBook(DELETE_BY_ID);
-        List<Comment> commentListAfter = libraryService.getAllComments();
-        int sizeAfter = commentListAfter.size();
-        assertEquals(sizeBefore - sizeAfter, DELETE_SIZE);
-    }
-
-    @DisplayName("Обновление комментария")
-    @Test
-    public void shouldUpdateComment() {
-        Comment commentBefore = entityManager.find(Comment.class, UPDATE_BY_ID);
-        String beforeComment = commentBefore.getText_comment();
-        entityManager.detach(commentBefore);
-        libraryService.updateCommentById(UPDATE_BY_ID, UPDATE_NEW_COMMENT);
-        Comment commentAfter = entityManager.find(Comment.class, UPDATE_BY_ID);
-        String afterComment = commentAfter.getText_comment();
-        assertNotEquals(beforeComment, afterComment);
+    public void shouldDeleteBook() {
+        Book book = entityManager.find(Book.class, DELETE_BY_ID);
+        assertNotNull(book);
+        booksService.deleteBookById(DELETE_BY_ID);
+        assertNull(entityManager.find(Book.class, DELETE_BY_ID));
     }
 }

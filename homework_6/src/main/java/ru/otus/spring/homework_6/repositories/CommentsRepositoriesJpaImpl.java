@@ -16,22 +16,6 @@ public class CommentsRepositoriesJpaImpl implements CommentsRepositoriesJpa {
     EntityManager em;
 
     @Override
-    public List<Comment> findByIdBook(long idBook) {
-        String jpql = "select c from Comment c where c.id_books = :idBook";
-        TypedQuery query = em.createQuery(jpql, Comment.class);
-        query.setParameter("idBook", idBook);
-        return query.getResultList();
-    }
-
-    @Override
-    public List<Comment> findByNameBook(String nameBook) {
-        String jpql = "select c from Comment c where c.id_books in (select b.id from Book b where b.name = :name)";
-        TypedQuery query = em.createQuery(jpql, Comment.class);
-        query.setParameter("name", nameBook);
-        return query.getResultList();
-    }
-
-    @Override
     public List<Comment> getAll() {
         String jpql = "select c from Comment c";
         TypedQuery query = em.createQuery(jpql, Comment.class);
@@ -48,7 +32,7 @@ public class CommentsRepositoriesJpaImpl implements CommentsRepositoriesJpa {
 
     @Override
     public void updateComment(long id, String newComment) {
-        String jpql = "update Comment set text_comment = : newComment where id = :id";
+        String jpql = "update Comment c set c.textComment = : newComment where c.id = :id";
         Query query = em.createQuery(jpql);
         query.setParameter("id", id);
         query.setParameter("newComment", newComment);

@@ -15,8 +15,6 @@ public interface BooksRepositoriesJpa {
 
     Book insert(Book book);
 
-    void updateStatus(long id, int status);
-
-    void deleteById(long id);
+    void delete(Book book);
 
 }

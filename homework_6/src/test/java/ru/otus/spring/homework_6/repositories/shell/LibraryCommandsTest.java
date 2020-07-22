@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.shell.Shell;
 import org.springframework.test.annotation.DirtiesContext;
-import ru.otus.spring.homework_6.services.LibraryService;
+import ru.otus.spring.homework_6.services.BooksService;
+import ru.otus.spring.homework_6.services.CommentsService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,7 +21,10 @@ public class LibraryCommandsTest {
     private Shell shell;
 
     @Autowired
-    LibraryService libraryService;
+    BooksService booksService;
+
+    @Autowired
+    CommentsService commentsService;
 
     //Books
     private static final String SELECT_COMMAND_BOOK = "sb";

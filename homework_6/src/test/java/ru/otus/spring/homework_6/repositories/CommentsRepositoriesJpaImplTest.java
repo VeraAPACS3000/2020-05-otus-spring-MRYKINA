@@ -39,58 +39,6 @@ public class CommentsRepositoriesJpaImplTest {
     @Autowired
     TestEntityManager entityManager;
 
-    //-------------------select 1 comment---------------------------------------------------
-
-    @DisplayName("загружать список комментариев по id книги не NULL")
-    @Test
-    void shouldFindAllCommentsByIdBook() {
-        final List<Comment> commentList = commentsRepositoriesJpa.findByIdBook(FIND_BY_ID);
-        assertNotNull(commentList);
-    }
-
-    @DisplayName("загружать список комментариев по id книги с ожидаемым количеством для своей книги")
-    @ParameterizedTest
-    @MethodSource("dataTestReturnCorrectSizeListComments")
-    void shouldReturnCorrectSizeListCommentsByIdBook(long idBook, int sizeShouldListComments) {
-        final List<Comment> commentList = commentsRepositoriesJpa.findByIdBook(idBook);
-        assertEquals(commentList.size(), sizeShouldListComments);
-    }
-
-    private static Stream<Arguments> dataTestReturnCorrectSizeListComments() {
-        return Stream.of(
-                Arguments.of(1, 2),//для книги id=1 должно быть 4 комментария
-                Arguments.of(2, 1),
-                Arguments.of(3, 3),
-                Arguments.of(4, 2),
-                Arguments.of(5, 4)
-        );
-    }
-
-    @DisplayName("загружать список комментариев по Названию книги не NULL")
-    @Test
-    void shouldFindAllCommentsByNameBook() {
-        final List<Comment> commentList = commentsRepositoriesJpa.findByNameBook(FIND_BY_NAME);
-        assertNotNull(commentList);
-    }
-
-    @DisplayName("загружать список комментариев по Названию книги с ожидаемым количеством для своей книги")
-    @ParameterizedTest
-    @MethodSource("dataTestReturnCorrectSizeListCommentsByNameBook")
-    void shouldReturnCorrectSizeListCommentsByNameBook(String nameBook, int sizeShouldListComments) {
-        final List<Comment> commentList = commentsRepositoriesJpa.findByNameBook(nameBook);
-        assertEquals(commentList.size(), sizeShouldListComments);
-    }
-
-    private static Stream<Arguments> dataTestReturnCorrectSizeListCommentsByNameBook() {
-        return Stream.of(
-                Arguments.of("Misery", 2),
-                Arguments.of("Desperation", 1),
-                Arguments.of("To Chaadaev", 3),
-                Arguments.of("I remember a wonderful moment", 2),
-                Arguments.of("David Copperfield", 4)
-        );
-    }
-
     //-------------------select ALL comments---------------------------------------------------
 
     @DisplayName("загружать весь список комментариев не NULL")
@@ -112,7 +60,7 @@ public class CommentsRepositoriesJpaImplTest {
     void shouldReturnListCommentsCorrectValuesNotNull() {
         final List<Comment> commentList = commentsRepositoriesJpa.getAll();
         assertThat(commentList)
-                .allMatch(s -> !s.getText_comment().equals(""));
+                .allMatch(s -> !s.getTextComment().equals(""));
         commentList.forEach(System.out::println);
     }
 
@@ -122,7 +70,7 @@ public class CommentsRepositoriesJpaImplTest {
     public void shouldInsertNewCommentNotNull() {
         Comment comment = new Comment(1, INSERT_NEW_COMMENT);
         commentsRepositoriesJpa.insert(comment);
-        assertThat(commentsRepositoriesJpa.findByIdBook(1)).isNotNull();
+        assertThat(entityManager.find(Comment.class, 1l)).isNotNull();
     }
 
     //-----------------update 1 comment----------------------------------------------------
@@ -130,12 +78,12 @@ public class CommentsRepositoriesJpaImplTest {
     @Test
     public void shouldUpdateComment() {
         Comment commentBeforeEntityManager = entityManager.find(Comment.class, 1l);
-        String commentBeforeEntity = commentBeforeEntityManager.getText_comment();
+        String commentBeforeEntity = commentBeforeEntityManager.getTextComment();
         System.out.println("comment before:" + commentBeforeEntity);
         entityManager.detach(commentBeforeEntityManager);
         commentsRepositoriesJpa.updateComment(1, UPDATE_NEW_COMMENT);
         Comment commentAfterEntityManager = entityManager.find(Comment.class, 1l);
-        String commentAfterEntity = commentAfterEntityManager.getText_comment();
+        String commentAfterEntity = commentAfterEntityManager.getTextComment();
         assertEquals(commentAfterEntity, UPDATE_NEW_COMMENT);
     }
 

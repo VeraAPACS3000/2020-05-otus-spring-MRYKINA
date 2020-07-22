@@ -6,10 +6,6 @@ import java.util.List;
 
 public interface CommentsRepositoriesJpa {
 
-    List<Comment> findByIdBook(long id);
-
-    List<Comment> findByNameBook(String name);
-
     List<Comment> getAll();
 
     void deleteById(long id);
