@@ -36,10 +36,42 @@ public class Book {
     @JoinColumn(name = "id_books", referencedColumnName = "id")
     private List<Comment> comments;
 
+    public Book(){
+
+    }
+
     public Book(String name, Author author, Genre genre) {
         this.name = name;
         this.author = author;
         this.genre = genre;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
     }
 
     @Override

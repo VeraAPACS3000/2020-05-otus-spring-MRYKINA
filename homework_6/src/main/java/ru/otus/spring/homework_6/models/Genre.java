@@ -20,11 +20,23 @@ public class Genre {
     @Column(name = "name", nullable = true)
     private String name;
 
+    public Genre() {
+
+    }
+
     public Genre(long id) {
         this.id = id;
     }
 
     public Genre(String name) {
         this.name = name;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }

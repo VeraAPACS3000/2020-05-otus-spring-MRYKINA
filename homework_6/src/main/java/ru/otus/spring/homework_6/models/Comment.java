@@ -28,9 +28,12 @@ public class Comment {
         return this.textComment;
     }
 
+    public Comment(){
+
+    }
+
     public Comment(long idBooks, String textComment) {
         this.idBooks = idBooks;
         this.textComment = textComment;
     }
-
 }

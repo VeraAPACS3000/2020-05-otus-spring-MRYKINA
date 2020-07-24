@@ -37,7 +37,6 @@ public class BooksServiceImpl implements BooksService {
     @Transactional
     public List<Book> getAllBooks() {
         List<Book> bookList = repositoriesBooks.getAll();
-        System.out.println("SIZE:" + bookList.size());
         for (Book book : bookList) {
             System.out.println(book.toString());
         }

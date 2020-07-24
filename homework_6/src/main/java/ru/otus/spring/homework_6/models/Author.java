@@ -20,11 +20,23 @@ public class Author {
     @Column(name = "name", nullable = true)
     private String name;
 
+    public Author() {
+
+    }
+
     public Author(long id) {
         this.id = id;
     }
 
     public Author(String name) {
         this.name = name;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }
