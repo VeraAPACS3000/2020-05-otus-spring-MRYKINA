@@ -40,21 +40,21 @@ public class CommentsRepositoriesJpaTest {
     @DisplayName("загружать весь список комментариев не NULL")
     @Test
     void shouldReturnListAllCommentsNotNull() {
-        final List<Comment> commentList = repoComments.findAll();
+        final List<Comment> commentList = (List<Comment>) repoComments.findAll();
         assertNotNull(commentList);
     }
 
     @DisplayName("загружать весь список комментариев с ожидаемым количеством")
     @Test
     void shouldReturnCorrectSizeListAllComments() {
-        final List<Comment> commentList = repoComments.findAll();
+        final List<Comment> commentList = (List<Comment>) repoComments.findAll();
         assertEquals(commentList.size(), ALL_COMMENTS_SIZE);
     }
 
     @DisplayName("загружать список всех комментариев с полной информацией о них")
     @Test
     void shouldReturnListCommentsCorrectValuesNotNull() {
-        final List<Comment> commentList = repoComments.findAll();
+        final List<Comment> commentList = (List<Comment>) repoComments.findAll();
         assertThat(commentList)
                 .allMatch(s -> !s.getTextComment().equals(""));
         commentList.forEach(System.out::println);
@@ -117,10 +117,10 @@ public class CommentsRepositoriesJpaTest {
     @DisplayName("удалить только 1 комментарий")
     @Test
     public void shouldDeleteComment() {
-        List<Comment> bookListComment = repoComments.findAll();
+        List<Comment> bookListComment = (List<Comment>) repoComments.findAll();
         int sizeBefore = bookListComment.size();
         repoComments.deleteById(DELETE_BY_ID);
-        List<Comment> bookListAfter = repoComments.findAll();
+        List<Comment> bookListAfter = (List<Comment>) repoComments.findAll();
         int sizeAfter = bookListAfter.size();
         assertEquals(sizeBefore - sizeAfter, DELETE_SIZE);
     }

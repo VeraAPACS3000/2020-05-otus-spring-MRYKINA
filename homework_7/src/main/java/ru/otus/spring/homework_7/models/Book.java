@@ -5,6 +5,14 @@ import java.util.List;
 
 
 @Entity
+@NamedEntityGraphs(value = {
+        @NamedEntityGraph(
+                name = "book-comments-entity-graph",
+                attributeNodes = {@NamedAttributeNode("comments"),
+                @NamedAttributeNode("author"),
+                @NamedAttributeNode("genre")}
+        )
+})
 @Table(name = "BOOKS")
 public class Book {
 
@@ -26,11 +34,7 @@ public class Book {
     @JoinColumn(name = "id_genre", referencedColumnName = "id")
     private Genre genre;
 
-    /**
-     * Здесь поставила EAGER, иначе методы(поиск комментов по книге(id,названию)) из сервиса CommentsService
-     * дают ошибку "failed to lazily initialize a collection of role"
-     */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_books", referencedColumnName = "id")
     private List<Comment> comments;
 

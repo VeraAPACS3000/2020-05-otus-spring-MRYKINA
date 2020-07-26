@@ -84,21 +84,21 @@ public class BooksRepositoriesJpaTest {
     @DisplayName("загружать список книг не null")
     @Test
     void shouldReturnListBookNotNull() {
-        final List<Book> bookList = repoBooks.findAll();
+        final List<Book> bookList = (List<Book>) repoBooks.findAll();
         assertThat(bookList).isNotNull();
     }
 
     @DisplayName("загружать корректное число книг")
     @Test
     void shouldReturnCorrectNumberRows() {
-        List<Book> bookList = repoBooks.findAll();
+        List<Book> bookList = (List<Book>) repoBooks.findAll();
         assertThat(bookList).hasSize(BOOK_LIST_SIZE);
     }
 
     @DisplayName("загружать список всех книг с полной информацией о них")
     @Test
     void shouldReturnListBooksCorrectValuesNotNull() {
-        final List<Book> bookList = repoBooks.findAll();
+        final List<Book> bookList = (List<Book>) repoBooks.findAll();
         assertThat(bookList)
                 .allMatch(s -> !s.getName().equals(""))
                 .allMatch(s -> s.getAuthor() != null)
@@ -130,11 +130,11 @@ public class BooksRepositoriesJpaTest {
     @DisplayName("удалить ровно 1 книгу")
     @Test
     public void shouldDeleteBook() {
-        List<Book> bookListBefore = repoBooks.findAll();
+        List<Book> bookListBefore = (List<Book>) repoBooks.findAll();
         int sizeBefore = bookListBefore.size();
         Book book = emTest.find(Book.class, 5l);
         repoBooks.delete(book);
-        List<Book> bookListAfter = repoBooks.findAll();
+        List<Book> bookListAfter = (List<Book>) repoBooks.findAll();
         int sizeAfter = bookListAfter.size();
         assertEquals(sizeBefore - sizeAfter, DELETE_SIZE);
     }

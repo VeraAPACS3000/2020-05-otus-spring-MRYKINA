@@ -9,5 +9,4 @@ public interface CommentsRepositoriesJpaCustom {
 
     void updateComment(String textComment, long id);
 
-    List<Comment> findByIdBook(long id);
 }

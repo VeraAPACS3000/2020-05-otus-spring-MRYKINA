@@ -6,15 +6,19 @@ import ru.otus.spring.homework_7.models.Comment;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 
 public class CommentsRepositoriesJpaCustomImpl implements CommentsRepositoriesJpaCustom {
+
+    private static Logger log = Logger.getLogger(CommentsRepositoriesJpaCustomImpl.class.getName());
 
     @Autowired
     BooksRepositoriesJpa repoBook;
 
     @Autowired
     CommentsRepositoriesJpa repoComment;
+
 
     CommentsRepositoriesJpaCustomImpl(BooksRepositoriesJpa repoBook, CommentsRepositoriesJpa repoComment) {
         this.repoBook = repoBook;
@@ -24,11 +28,10 @@ public class CommentsRepositoriesJpaCustomImpl implements CommentsRepositoriesJp
     public List<Comment> findByNameBook(String nameBook) {
         Optional<Book> book = repoBook.findByName(nameBook);
         List<Comment> commentList = null;
-        int count = 0;
         if (book.isPresent()) {
             commentList = book.get().getComments();
         } else {
-            System.out.println("Oops...No comments yet");
+            log.info("Oops...No comments yet");
         }
         return commentList;
     }
@@ -39,20 +42,7 @@ public class CommentsRepositoriesJpaCustomImpl implements CommentsRepositoriesJp
             comment.get().setTextComment(textComment);
             repoComment.save(comment.get());
         } else {
-            System.out.println("Not found comment to update");
+            log.info("Not found comment to update");
         }
-    }
-
-    @Override
-    public List<Comment> findByIdBook(long id) {
-        int count = 0;
-        List<Comment> commentList = null;
-        Optional<Book> book = repoBook.findById(id);
-        if (book.isPresent()) {
-            commentList = book.get().getComments();
-        } else {
-            System.out.println("Oops...No comments yet");
-        }
-        return commentList;
     }
 }

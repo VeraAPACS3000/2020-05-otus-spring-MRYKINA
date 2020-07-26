@@ -78,6 +78,8 @@ public class LibraryBooksShellCommands {
     @ShellMethod(value = "Find comments by name book. Example: fcname 'Misery'", key = {"fcn", "findCommentByNameBook"})
     public String findCommentByNameBook(String nameBook) {
         List<Comment> listComments = commentsService.findCommentsByNameBook(nameBook);
+        if (listComments == null)
+            return "Не нашли ни одного комментария к книге по названию книги";
         System.out.println(listComments);
         return "Нашли все комментарии к книге по названию книги";
     }

@@ -8,15 +8,21 @@ import ru.otus.spring.homework_7.models.Comment;
 import ru.otus.spring.homework_7.repositories.BooksRepositoriesJpa;
 import ru.otus.spring.homework_7.repositories.CommentsRepositoriesJpa;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class CommentsServiceImpl implements CommentsService {
 
+    private static Logger log = Logger.getLogger(CommentsServiceImpl.class.getName());
+
     CommentsRepositoriesJpa repoComment;
 
     BooksRepositoriesJpa repoBook;
+
+    EntityManager em;
 
     CommentsServiceImpl(CommentsRepositoriesJpa repoComment, BooksRepositoriesJpa repoBook) {
         this.repoComment = repoComment;
@@ -25,22 +31,38 @@ public class CommentsServiceImpl implements CommentsService {
 
     @Override
     public Optional<Comment> findCommentById(Long id) {
-        return repoComment.findById(id);
+        Optional<Comment> comment = repoComment.findById(id);
+        if (comment == null) {
+            log.info("Not found comment by id");
+        }
+        return comment;
     }
 
     @Override
     public List<Comment> findCommentByIdBook(long idBook) {
-        return repoComment.findByIdBook(idBook);
+        List<Comment> commentList = repoComment.findByIdBook(idBook);
+        if (commentList == null) {
+            log.info("Not found list comments by id book");
+        }
+        return commentList;
     }
 
     @Override
     public List<Comment> findCommentsByNameBook(String nameBook) {
-        return repoComment.findByNameBook(nameBook);
+        List<Comment> commentList = repoComment.findByNameBook(nameBook);
+        if (commentList == null) {
+            log.info("Not found list comments by name book");
+        }
+        return commentList;
     }
 
     @Override
     public List<Comment> getAllComments() {
-        return repoComment.findAll();
+        List<Comment> commentList = repoComment.findAll();
+        if (commentList == null) {
+            log.info("Not found list comments");
+        }
+        return commentList;
     }
 
     @Override
@@ -65,7 +87,7 @@ public class CommentsServiceImpl implements CommentsService {
             comment = new Comment(book.get().getId(), textComment);
             repoComment.save(comment);
         } else {
-            System.out.println("Oops..no the book for your comment");
+            log.info("Oops..no the book for your comment");
         }
         return comment;
     }

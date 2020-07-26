@@ -46,7 +46,10 @@ public class LibraryBooksShellCommandsTest {
     private static final String FIND_BY_ID_COMMAND_COMMENT = "fcid";
     private static final String RESULT_FIND_BY_ID_COMMAND_COMMENT = "Нашли все комментарии к книге по id";
     private static final String FIND_BY_NAME_COMMAND_COMMENT = "fcn";
+    private static final String FIND_COMMENT_NAME_BOOK = "Desperation";
+    private static final String FIND_COMMENT_NAME_BOOK_NOT_FOUND = "newMisery";
     private static final String RESULT_FIND_BY_NAME_COMMAND_COMMENT = "Нашли все комментарии к книге по названию книги";
+    private static final String RESULT_FIND_BY_NAME_COMMAND_COMMENT_NOT_FOUND = "Не нашли ни одного комментария к книге по названию книги";
     private static final String UPDATE_COMMAND_COMMENT = "uc";
     private static final String RESULT_UPDATE_COMMAND_COMMENT = "Изменили текст комментария";
     private static final String DELETE_COMMAND_COMMENT = "dc";
@@ -112,10 +115,17 @@ public class LibraryBooksShellCommandsTest {
         assertThat(resultCommand).isEqualTo(RESULT_FIND_BY_ID_COMMAND_COMMENT);
     }
 
+    @DisplayName("Должен возвращать ответ: Не нашли ни одного комментария к книге по названию книги")
+    @Test
+    void shouldReturnCommentByNameBookNotFound() {
+        String resultCommand = (String) shell.evaluate(() -> FIND_BY_NAME_COMMAND_COMMENT + " " + FIND_COMMENT_NAME_BOOK_NOT_FOUND);
+        assertThat(resultCommand).isEqualTo(RESULT_FIND_BY_NAME_COMMAND_COMMENT_NOT_FOUND);
+    }
+
     @DisplayName("Должен возвращать ответ: Нашли все комментарии к книге по названию книги")
     @Test
     void shouldReturnCommentByNameBook() {
-        String resultCommand = (String) shell.evaluate(() -> FIND_BY_NAME_COMMAND_COMMENT + " 2");
+        String resultCommand = (String) shell.evaluate(() -> FIND_BY_NAME_COMMAND_COMMENT + " " + FIND_COMMENT_NAME_BOOK);
         assertThat(resultCommand).isEqualTo(RESULT_FIND_BY_NAME_COMMAND_COMMENT);
     }
 

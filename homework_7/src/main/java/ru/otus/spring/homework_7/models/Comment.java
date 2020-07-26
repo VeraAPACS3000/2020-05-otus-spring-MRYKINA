@@ -2,8 +2,14 @@ package ru.otus.spring.homework_7.models;
 
 import javax.persistence.*;
 
-
 @Entity
+
+@NamedEntityGraphs(value = {
+        @NamedEntityGraph(
+                name = "comment-books-entity-graph",
+                attributeNodes = @NamedAttributeNode("idBook")
+        )
+})
 @Table(name = "comments")
 public class Comment {
 
