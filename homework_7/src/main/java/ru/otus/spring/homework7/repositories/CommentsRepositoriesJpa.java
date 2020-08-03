@@ -9,11 +9,7 @@ import java.util.List;
 
 @Repository
 public interface CommentsRepositoriesJpa extends CrudRepository<Comment, Long> {
-
-    //void updateComment(String text, long id);
-
     @Override
     @EntityGraph(value = "comment-books-entity-graph")
     List<Comment> findAll();
-
 }
