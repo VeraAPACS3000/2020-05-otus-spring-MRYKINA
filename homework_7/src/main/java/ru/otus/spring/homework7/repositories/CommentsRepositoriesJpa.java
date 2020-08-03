@@ -8,9 +8,7 @@ import ru.otus.spring.homework7.models.Comment;
 import java.util.List;
 
 @Repository
-public interface CommentsRepositoriesJpa extends CrudRepository<Comment, Long>, CommentsRepositoriesJpaCustom {
-
-    //void updateComment(String text, long id);
+public interface CommentsRepositoriesJpa extends CrudRepository<Comment, Long> {
 
     @Override
     @EntityGraph(value = "comment-books-entity-graph")
