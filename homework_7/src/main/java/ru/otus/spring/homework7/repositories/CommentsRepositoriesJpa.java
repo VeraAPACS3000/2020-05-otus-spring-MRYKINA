@@ -8,7 +8,7 @@ import ru.otus.spring.homework7.models.Comment;
 import java.util.List;
 
 @Repository
-public interface CommentsRepositoriesJpa extends CrudRepository<Comment, Long>, CommentsRepositoriesJpaCustom {
+public interface CommentsRepositoriesJpa extends CrudRepository<Comment, Long> {
 
     //void updateComment(String text, long id);
 
