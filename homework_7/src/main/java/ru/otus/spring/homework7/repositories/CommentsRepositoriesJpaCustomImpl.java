@@ -1,11 +1,7 @@
 package ru.otus.spring.homework7.repositories;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.otus.spring.homework7.models.Book;
-import ru.otus.spring.homework7.models.Comment;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 
@@ -25,13 +21,7 @@ public class CommentsRepositoriesJpaCustomImpl implements CommentsRepositoriesJp
         this.repoComment = repoComment;
     }
 
-    /*
-        1. Вот использую по ООП метод getComments()
-
-        2. мне кажется когда именно этот метод стоял в CommentsRepositoriesJpa
-        и его по словам find и idBook строил JPA тоже не плохо, удобно же
-     */
-    public List<Comment> findByIdBook(long id) {
+    /*public List<Comment> findByIdBook(long id) {
         Optional<Book> book = repoBook.findById(id);
         List<Comment> commentList = null;
         if (book.isPresent()) {
@@ -42,9 +32,6 @@ public class CommentsRepositoriesJpaCustomImpl implements CommentsRepositoriesJp
         return commentList;
     }
 
-    /*
-        Вот использую по ООП метод getComments()
-     */
     public List<Comment> findByNameBook(String nameBook) {
         Optional<Book> book = repoBook.findByName(nameBook);
         List<Comment> commentList = null;
@@ -64,5 +51,5 @@ public class CommentsRepositoriesJpaCustomImpl implements CommentsRepositoriesJp
         } else {
             log.info("Not found comment to update");
         }
-    }
+    }*/
 }

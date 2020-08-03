@@ -21,8 +21,6 @@ public class CommentsServiceImpl implements CommentsService {
 
     BooksRepositoriesJpa repoBook;
 
-    //EntityManager em;
-
     CommentsServiceImpl(CommentsRepositoriesJpa repoComment, BooksRepositoriesJpa repoBook) {
         this.repoComment = repoComment;
         this.repoBook = repoBook;
@@ -39,18 +37,24 @@ public class CommentsServiceImpl implements CommentsService {
 
     @Override
     public List<Comment> findCommentByIdBook(long idBook) {
-        List<Comment> commentList = repoComment.findByIdBook(idBook);
-        if (commentList == null) {
-            log.info("Not found list comments by id book");
+        Optional<Book> book = repoBook.findById(idBook);
+        List<Comment> commentList = null;
+        if (book.isPresent()) {
+            commentList = book.get().getComments();
+        } else {
+            log.info("Oops...No comments yet");
         }
         return commentList;
     }
 
     @Override
     public List<Comment> findCommentsByNameBook(String nameBook) {
-        List<Comment> commentList = repoComment.findByNameBook(nameBook);
-        if (commentList == null) {
-            log.info("Not found list comments by name book");
+        Optional<Book> book = repoBook.findByName(nameBook);
+        List<Comment> commentList = null;
+        if (book.isPresent()) {
+            commentList = book.get().getComments();
+        } else {
+            log.info("Oops...No comments yet");
         }
         return commentList;
     }
@@ -74,7 +78,13 @@ public class CommentsServiceImpl implements CommentsService {
     @Modifying(clearAutomatically = true)
     @Transactional
     public void updateCommentById(long id, String newComment) {
-        repoComment.updateComment(newComment, id);
+        Optional<Comment> comment = repoComment.findById(id);
+        if (comment.isPresent()) {
+            comment.get().setTextComment(newComment);
+            repoComment.save(comment.get());
+        } else {
+            log.info("Not found comment to update");
+        }
     }
 
     @Override

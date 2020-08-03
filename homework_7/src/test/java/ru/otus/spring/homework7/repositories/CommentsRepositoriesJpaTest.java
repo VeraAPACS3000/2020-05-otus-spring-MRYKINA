@@ -22,12 +22,10 @@ public class CommentsRepositoriesJpaTest {
 
     private static final int ALL_COMMENTS_SIZE = 12;
     private static final String INSERT_NEW_COMMENT = "new best comment test";
-    private static final String UPDATE_NEW_COMMENT = "update new best comment test";
     private static final long DELETE_BY_ID = 2l;
     private static final long DELETE_SIZE = 1l;
-    private static final long FIND_BY_ID = 1l;
     private static final long FIND_BY_ID_COMMENT = 8l;
-    private static final String FIND_BY_NAME = "David Copperfield";
+
 
     @Autowired
     TestEntityManager emTest;
@@ -76,20 +74,6 @@ public class CommentsRepositoriesJpaTest {
         assertThat(commentList).isPresent();
     }
 
-    @DisplayName("загружать список комментариев по id книги. Не null")
-    @Test
-    public void shouldFindAllCommentsByIdBookNotNull() {
-        List<Comment> commentList = repoComments.findByIdBook(FIND_BY_ID);
-        assertThat(commentList).isNotNull();
-    }
-
-    @DisplayName("загружать список комментариев по названию книги")
-    @Test
-    public void shouldFindAllCommentsByNameBook() {
-        List<Comment> commentList = repoComments.findByNameBook(FIND_BY_NAME);
-        assertThat(commentList).isNotNull();
-    }
-
     //-------------------insert 1 comment---------------------------------------------------
     @DisplayName("добавить 1 новый комментарий не NULL")
     @Test
@@ -97,20 +81,6 @@ public class CommentsRepositoriesJpaTest {
         Comment comment = new Comment(1, INSERT_NEW_COMMENT);
         repoComments.save(comment);
         assertThat(emTest.find(Comment.class, 1l)).isNotNull();
-    }
-
-    //-----------------update 1 comment----------------------------------------------------
-    @DisplayName("обновить 1 комментарий")
-    @Test
-    public void shouldUpdateComment() {
-        Comment commentBeforeEntityManager = emTest.find(Comment.class, 1l);
-        String commentBeforeEntity = commentBeforeEntityManager.getTextComment();
-        System.out.println("comment before:" + commentBeforeEntity);
-        emTest.detach(commentBeforeEntityManager);
-        repoComments.updateComment(UPDATE_NEW_COMMENT, 1);
-        Comment commentAfterEntityManager = emTest.find(Comment.class, 1l);
-        String commentAfterEntity = commentAfterEntityManager.getTextComment();
-        assertEquals(commentAfterEntity, UPDATE_NEW_COMMENT);
     }
 
     //-----------------delete 1 comment----------------------------------------------------
