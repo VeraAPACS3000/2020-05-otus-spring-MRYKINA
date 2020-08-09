@@ -1,5 +1,6 @@
 package ru.otus.spring.homework7.services;
 
+import org.hibernate.Hibernate;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,11 +36,17 @@ public class CommentsServiceImpl implements CommentsService {
         return comment;
     }
 
+    /*
+        Вариант - явно сказать хибирнет что инициализировать
+        и не забывать в таком случае @Transactional
+     */
     @Override
+    @Transactional
     public List<Comment> findCommentByIdBook(long idBook) {
         Optional<Book> book = repoBook.findById(idBook);
         List<Comment> commentList = null;
         if (book.isPresent()) {
+            Hibernate.initialize(book.get().getComments());
             commentList = book.get().getComments();
         } else {
             log.info("Oops...No comments yet");
@@ -47,15 +54,22 @@ public class CommentsServiceImpl implements CommentsService {
         return commentList;
     }
 
+    /*
+        Вариант - обращаемся к объекту, чтобы он досуществовал до места, где вызывают сервис
+        Обращаюсь просто с методом .size();
+     */
     @Override
+    @Transactional
     public List<Comment> findCommentsByNameBook(String nameBook) {
         Optional<Book> book = repoBook.findByName(nameBook);
         List<Comment> commentList = null;
         if (book.isPresent()) {
             commentList = book.get().getComments();
+            commentList.size();//здесь обращаюсь
         } else {
-            log.info("Oops...No comments yet");
+            System.out.println("Oops...No comments yet");
         }
+
         return commentList;
     }
 
