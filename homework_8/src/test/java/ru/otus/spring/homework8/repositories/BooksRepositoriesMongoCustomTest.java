@@ -25,21 +25,6 @@ public class BooksRepositoriesMongoCustomTest {
     @Autowired
     private CommentsRepositpriesMongo repoComment;
 
-    @DisplayName("обновлять статус книги")
-    @Test
-    void shouldUpdateStatusBook() {
-        List<Book> listBooks = repoBook.findAll();
-        Book bookBefore = listBooks.get(0);
-        String nameBook = bookBefore.getName();
-        int statusBookBefore = bookBefore.getStatus();
-        repoBook.updateStatus(nameBook, UPDATE_STATUS_BOOK);
-        Book bookAfter = repoBook.findByName(nameBook);
-        int statusBookAfter = bookAfter.getStatus();
-        System.out.println("status before:" + statusBookBefore);
-        System.out.println("status after:" + statusBookAfter);
-        assertThat(statusBookBefore).isNotEqualTo(statusBookAfter);
-    }
-
     @DisplayName("вернуть список книг")
     @Test
     void shouldReturnListBooks() {
@@ -67,24 +52,13 @@ public class BooksRepositoriesMongoCustomTest {
         assertThat(listComments).hasSize(countComments);
     }
 
-    @DisplayName("удалять книгу")
-    @Test
-    void shouldCorrectDeleteBook() {
-        int countBooksBefore = repoBook.findAll().size();
-        repoBook.deleteBookByName(DELETE_NAME_BOOK);
-        int countBooksAfter = repoBook.findAll().size();
-        System.out.println("count before:" + countBooksBefore);
-        System.out.println("count after:" + countBooksAfter);
-        assertThat(countBooksAfter).isEqualTo(countBooksBefore - 1);
-    }
-
     @DisplayName("НЕ добавлять книгу с одинаковым названием")
     @Test
     void shouldAddBookWithoutDuplicate() {
         List<Book> listBooks = repoBook.findAll();
         int countBooksBefore = listBooks.size();
         Book book = listBooks.get(0);
-        repoBook.insertBookWithoutDuplicateName(book);
+        repoBook.insert(book);
         int countBooksAfter = listBooks.size();
         System.out.println("count before:" + countBooksBefore);
         System.out.println("count after:" + countBooksAfter);

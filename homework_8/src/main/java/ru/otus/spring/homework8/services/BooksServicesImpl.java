@@ -1,5 +1,8 @@
 package ru.otus.spring.homework8.services;
 
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.homework8.model.Author;
 import ru.otus.spring.homework8.model.Book;
@@ -18,16 +21,19 @@ import java.util.logging.Logger;
 public class BooksServicesImpl implements BooksServices {
 
     private static Logger log = Logger.getLogger(BooksServicesImpl.class.getName());
+    private final MongoTemplate mongoTemplate;
 
     BooksRepositoriesMongo repoBook;
     CommentsRepositpriesMongo repoComments;
     AuthorsRepositoriesMongo repoAuthors;
     GenresRepositoriesMongo repoGenres;
 
-    BooksServicesImpl(BooksRepositoriesMongo repoBook,
+    BooksServicesImpl(MongoTemplate mongoTemplate,
+                      BooksRepositoriesMongo repoBook,
                       CommentsRepositpriesMongo repoComments,
                       AuthorsRepositoriesMongo repoAuthors,
                       GenresRepositoriesMongo repoGenres) {
+        this.mongoTemplate = mongoTemplate;
         this.repoBook = repoBook;
         this.repoComments = repoComments;
         this.repoAuthors = repoAuthors;
@@ -51,9 +57,9 @@ public class BooksServicesImpl implements BooksServices {
 
     @Override
     public void deleteByNameBook(String nameBook) {
-        Book book = repoBook.findByName(nameBook);
-        repoComments.deleteAll(book.getComments());
-        repoBook.delete(book);
+        Book book = mongoTemplate.findOne(
+                Query.query(Criteria.where("name").is(nameBook)), Book.class);
+        mongoTemplate.remove(book);
     }
 
     @Override
@@ -64,24 +70,35 @@ public class BooksServicesImpl implements BooksServices {
 
     @Override
     public void add(String nameBook, String nameAuthor, String nameGenre) {
-        Author author = new Author(nameAuthor);
-        Genre genre = new Genre(nameGenre);
-        Comment comment = new Comment();
-        repoAuthors.insert(author);
-        repoGenres.insert(genre);
-        repoComments.insert(comment);
-        Book book = new Book(nameBook, 1, author, genre, comment);
-        repoBook.insertBookWithoutDuplicateName(book);
+        Book bookFind = mongoTemplate.findOne(
+                Query.query(Criteria.where("name").is(nameBook)), Book.class);
+        if (bookFind == null) {
+            Author author = new Author(nameAuthor);
+            Genre genre = new Genre(nameGenre);
+            Comment comment = new Comment();
+            repoAuthors.insert(author);
+            repoGenres.insert(genre);
+            repoComments.insert(comment);
+            Book book = new Book(nameBook, 1, author, genre, comment);
+            mongoTemplate.insert(book, "books");
+        }
     }
 
     @Override
     public void insert(Book book) {
-        repoBook.insertBookWithoutDuplicateName(book);
+        Book bookFind = mongoTemplate.findOne(
+                Query.query(Criteria.where("name").is(book.getName())), Book.class);
+        if (bookFind == null) {
+            mongoTemplate.insert(book, "books");
+        }
     }
 
     @Override
     public void update(String name, int status) {
-        repoBook.updateStatus(name, status);
+        Book book = mongoTemplate.findOne(
+                Query.query(Criteria.where("name").is(name)), Book.class);
+        book.setStatus(status);
+        mongoTemplate.save(book, "books");
     }
 
     @Override
