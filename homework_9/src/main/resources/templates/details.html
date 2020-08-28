@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book info details</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .column {
+            float: left;
+            width: 30%;
+            padding: 10px;
+            height: 150px;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        input:read-only {
+            background: lightgray;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="blockToBack">
+    <a th:href="@{/}" href="listBooks.html">BACK TO LIST BOOKS</a>
+</div>
+<form id="edit-form" th:action="@{/bookInfo(id=${book.id})}" th:method="post" action="details.html">
+    <div class="row">
+        <div class="column">
+            <h2>Book info:</h2>
+
+            <div class="row">
+                <label for="id-output">ID:</label>
+                <output id="id-output" name="id" type="text" th:text="${book.id}">1</output>
+            </div>
+
+            <div class="row">
+                <label for="name-output">Name:</label>
+                <output id="name-output" name="name" type="text" th:text="${book.name}">Litter to Onegin</output>
+            </div>
+
+            <div class="row">
+                <label for="author-output">Author:</label>
+                <output id="author-output" name="nameAuthor" type="text" th:text="${book.nameAuthor}">Pushkin</output>
+            </div>
+
+            <div class="row">
+                <label for="genre-output">Genre:</label>
+                <output id="genre-output" name="nameGenre" type="text" th:text="${book.nameGenre}">Lyrics</output>
+            </div>
+
+            <div class="row">
+                <label for="status-input">Status:</label>
+                <input id="status-input" name="status" type="text" th:value="${book.status}" value="0"/>
+            </div>
+            <h2>Comments:</h2>
+            <ol>
+                <div class="row">
+                    <tr th:each="comment : ${book.comments}">
+                        <li>
+                            <td th:text="${comment.textComment}" style="text-align: center">text comment</td>
+                        </li>
+                    </tr>
+                </div>
+            </ol>
+        </div>
+        <div class="column">
+            <h2>Actions</h2>
+            <button type="submit" name="action" value="update">update status book</button>
+            <button type="submit" name="action" value="delete">delete book</button>
+            <p><b>Введите ваш отзыв:</b></p>
+            <p><textarea rows="10" cols="45" name="textComment"></textarea></p>
+            <button type="submit" name="action" value="comment">add comment</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>
