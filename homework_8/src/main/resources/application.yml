@@ -1,0 +1,16 @@
+spring:
+  shell:
+    interactive:
+      enabled: false
+
+  data:
+    mongodb:
+      database: mongoLibraryBooks
+
+mongock:
+  change-logs-scan-package: ru.otus.spring.homework8.changelogs
+  runner-type: initializingbean
+
+logging:
+  level:
+    root: ERROR
