@@ -32,6 +32,7 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Book> getAllBooks() {
         List<Book> listBooks = (List<Book>) repoBook.findAll();
         if (listBooks == null) {
@@ -41,6 +42,7 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Book> findBookById(long id) {
         Optional<Book> bookOptional = repoBook.findById(id);
         if (bookOptional == null) {
@@ -50,6 +52,7 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Book> findBookByName(String nameBook) {
         Optional<Book> bookOptional = repoBook.findByName(nameBook);
         if (bookOptional == null) {

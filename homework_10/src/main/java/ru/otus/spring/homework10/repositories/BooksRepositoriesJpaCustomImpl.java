@@ -1,6 +1,5 @@
 package ru.otus.spring.homework10.repositories;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.otus.spring.homework10.models.Book;
 
 import java.util.Optional;
@@ -10,11 +9,8 @@ public class BooksRepositoriesJpaCustomImpl implements BooksRepositoriesJpaCusto
 
     private static Logger log = Logger.getLogger(BooksRepositoriesJpaCustomImpl.class.getName());
 
-    @Autowired
-    private BooksRepositoriesJpa repoBook;
-
-    @Autowired
-    private CommentsRepositoriesJpa repoComment;
+    private final BooksRepositoriesJpa repoBook;
+    private final CommentsRepositoriesJpa repoComment;
 
     BooksRepositoriesJpaCustomImpl(BooksRepositoriesJpa repoBook, CommentsRepositoriesJpa repoComment) {
         this.repoBook = repoBook;

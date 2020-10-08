@@ -7,21 +7,17 @@ import java.util.List;
 
 public class BookDto {
 
-    private long id;
+    private final long id;
 
-    private String name;
+    private final String name;
 
-    private int status;
+    private final int status;
 
-    private String nameAuthor;
+    private final String nameAuthor;
 
-    private String nameGenre;
+    private final String nameGenre;
 
-    private List<Comment> comments;
-
-    public BookDto() {
-
-    }
+    private final List<Comment> comments;
 
     public BookDto(long id, String name, int status, String nameAuthor, String nameGenre, List<Comment> commentList) {
         this.id = id;

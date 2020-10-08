@@ -28,6 +28,7 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Comment> findCommentById(Long id) {
         Optional<Comment> comment = repoComment.findById(id);
         if (comment == null) {
@@ -37,7 +38,7 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Comment> findCommentByIdBook(long idBook) {
         Optional<Book> book = repoBook.findById(idBook);
         List<Comment> commentList = null;
@@ -51,7 +52,7 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Comment> findCommentsByNameBook(String nameBook) {
         Optional<Book> book = repoBook.findByName(nameBook);
         List<Comment> commentList = null;
@@ -66,6 +67,7 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Comment> getAllComments() {
         List<Comment> commentList = repoComment.findAll();
         if (commentList == null) {

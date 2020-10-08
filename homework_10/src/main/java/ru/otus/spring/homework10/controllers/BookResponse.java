@@ -1,9 +1,9 @@
 package ru.otus.spring.homework10.controllers;
 
 public class BookResponse {
-    private String nameBook;
-    private String nameAuthor;
-    private String nameGenre;
+    private final String nameBook;
+    private final String nameAuthor;
+    private final String nameGenre;
 
     public String getNameBook() {
         return nameBook;
@@ -15,10 +15,6 @@ public class BookResponse {
 
     public String getNameGenre() {
         return nameGenre;
-    }
-
-    BookResponse() {
-
     }
 
     BookResponse(String nameBook, String nameAuthor, String nameGenre) {
