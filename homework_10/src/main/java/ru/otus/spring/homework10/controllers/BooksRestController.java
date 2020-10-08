@@ -1,6 +1,5 @@
 package ru.otus.spring.homework10.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.otus.spring.homework10.dto.BookDto;
 import ru.otus.spring.homework10.models.Book;
@@ -14,11 +13,8 @@ import java.util.stream.Collectors;
 @RestController
 public class BooksRestController {
 
-    @Autowired
-    private BooksService booksService;
-
-    @Autowired
-    private CommentsService commentsService;
+    private final BooksService booksService;
+    private final CommentsService commentsService;
 
     public BooksRestController(BooksService booksService, CommentsService commentsService) {
         this.booksService = booksService;
