@@ -12,7 +12,6 @@
 	<groupId>ru.otus.spring</groupId>
 	<artifactId>homework11</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
 	<name>homework11</name>
 	<description>Home work 11 project for Spring Boot (Project Reactor + Flux)</description>
 
@@ -22,6 +21,10 @@
 	</properties>
 
 	<dependencies>
+		<!--<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>-->
 		<!-- Зависимости WebFlux -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -37,10 +40,7 @@
 			<artifactId>jquery</artifactId>
 			<version>3.3.1</version>
 		</dependency>
-		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>webjars-locator-core</artifactId>
-		</dependency>
+
 		<!-- Зависимости Reactive SpringData -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -59,7 +59,7 @@
 		</dependency>
 
 		<!--Тестирование-->
-		<!--<dependency>
+		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
 			<scope>test</scope>
@@ -72,6 +72,20 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+	<!--	<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${assertj.version}</version>
 			<scope>test</scope>
 		</dependency>-->
 
@@ -95,8 +109,13 @@
 			<artifactId>mongodb-springdata-v3-driver</artifactId>
 			<version>4.1.14</version>
 		</dependency>
+        <!--<dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>-->
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>

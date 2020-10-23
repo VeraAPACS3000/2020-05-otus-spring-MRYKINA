@@ -1,8 +1,9 @@
 package ru.otus.spring.homework11.page;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import reactor.core.publisher.Mono;
+import org.springframework.web.bind.annotation.PathVariable;
 import ru.otus.spring.homework11.repositories.BooksRepositoriesReact;
 import ru.otus.spring.homework11.repositories.CommentsRepositpriesReact;
 
@@ -18,20 +19,18 @@ public class BooksController {
     }
 
     @GetMapping("/")
-    public Mono<String> listAllBooks() {
-        System.out.println("test-test");
-        return Mono.just("listBooks").log();
+    public String listAllBooks() {
+        return "listBooks";
     }
 
-    /*@GetMapping("/bookInfo/{id}")
-    public String getBookById(@PathVariable("id") long id, Model model) {
-        model.addAttribute("id", id);
+    @GetMapping("/bookInfo/{id}")
+    public String getBookById(@PathVariable("id") String id, Model model) {
         return "details";
     }
 
     @GetMapping("/addNewBook")
     public String addBook() {
         return "newBook";
-    }*/
+    }
 
 }

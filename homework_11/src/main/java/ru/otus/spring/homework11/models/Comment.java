@@ -27,6 +27,9 @@ public class Comment {
         this.textComment = textComment;
     }
 
+    public Comment(Book book, String textComment) {
+    }
+
     public String getTextComment() {
         return textComment;
     }

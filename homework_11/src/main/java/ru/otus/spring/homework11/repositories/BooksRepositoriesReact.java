@@ -7,5 +7,6 @@ import ru.otus.spring.homework11.models.Book;
 
 @Repository
 public interface BooksRepositoriesReact extends ReactiveMongoRepository<Book, String> {
+
     Mono<Book> findByName(String name);
 }

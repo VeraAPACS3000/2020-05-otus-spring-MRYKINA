@@ -79,8 +79,8 @@ public class Book {
         return status;
     }
 
-
     public void setStatus(int status) {
+        System.out.println("logs status");
         this.status = status;
     }
 

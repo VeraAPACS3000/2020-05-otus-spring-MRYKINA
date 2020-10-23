@@ -1,15 +1,15 @@
 package ru.otus.spring.homework11.controllers;
 
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.otus.spring.homework11.dto.BookDto;
+import ru.otus.spring.homework11.models.Author;
 import ru.otus.spring.homework11.models.Book;
 import ru.otus.spring.homework11.models.Comment;
+import ru.otus.spring.homework11.models.Genre;
+import ru.otus.spring.homework11.repositories.AuthorsRepositoriesReact;
 import ru.otus.spring.homework11.repositories.BooksRepositoriesReact;
 import ru.otus.spring.homework11.repositories.CommentsRepositpriesReact;
 
@@ -17,55 +17,63 @@ import java.util.List;
 
 @RestController
 public class BooksRestController {
-
     private final BooksRepositoriesReact repositoryBook;
     private final CommentsRepositpriesReact repositoryComment;
+    private final AuthorsRepositoriesReact repositoriesAuthors;
     private final ReactiveMongoTemplate template;
 
-    public BooksRestController(BooksRepositoriesReact repositoryBook, CommentsRepositpriesReact repositoryComment, ReactiveMongoTemplate template) {
+    public BooksRestController(BooksRepositoriesReact repositoryBook, CommentsRepositpriesReact repositoryComment, AuthorsRepositoriesReact repositoriesAuthors, ReactiveMongoTemplate template) {
         this.repositoryBook = repositoryBook;
         this.repositoryComment = repositoryComment;
+        this.repositoriesAuthors = repositoriesAuthors;
         this.template = template;
     }
 
     @GetMapping("/api/books")
     public Flux<BookDto> getAllBooks() {
-               return Flux.from(repositoryBook.findAll().map(BookDto::toDto));
+        System.out.println("call getAllBooks");
+        return Flux.from(repositoryBook.findAll().map(BookDto::toDto));
     }
 
     @GetMapping("/api/bookInfo/{id}")
     public Mono<BookDto> getBookById(@PathVariable String id) {
-        return Mono.from(repositoryBook.findByName(id).map(BookDto::toDto)).defaultIfEmpty(
-                new BookDto("255", "test db", 1, "name1", "name2", List.of(
+        return Mono.from(repositoryBook.findById(id).map(BookDto::toDto)).defaultIfEmpty(
+                new BookDto("255", "Fake", 1, "Fake", "Fake", List.of(
                         new Comment("new comment 123")
                 ))
         );
     }
 
-    //TODO:при реализации view делаешь поиск по id
-    @PostMapping(value = "/api/bookInfo/{id}/update/{status}")
-    public Mono<String> detailsBook(@PathVariable("status") int status,
-                              @PathVariable("name") String name) {
-        Query query = new Query(Criteria.where("name").is(name));
-        Update update = new Update().set("status", status);
-        template.findAndModify(query, update, Book.class);
-        //template.save(book, "books");
-        return Mono.just("OK");
+    @PostMapping("/api/newBook")
+    public Mono addNewBook(@RequestBody BookResponse book) {
+        return Mono.from(repositoryBook.insert(new Book(book.getNameBook(), 1, new Author(book.getNameAuthor()),
+                new Genre(book.getNameGenre())))
+        );
     }
 
-   /* @PostMapping(value = "/api/bookInfo/{id}/addcomment")
-    public String addComment(@RequestBody String textComment,
-                             @PathVariable("id") long id) {
-        Comment comment = new Comment(textComment);
-        repositoryComment.insert(comment);
-        commentsService.addNewCommentByIdBook(textComment, id);
-        return "OK";
-    }*/
+    @PostMapping(value = "/api/bookInfo/{id}/deletebook")
+    public Mono deleteBook(@PathVariable("id") String id) {
+        return Mono.from(repositoryBook.deleteById(id));
+    }
 
-    /*
-    List<Book> listBooks = serviceBook.findAll();
-        Book book = listBooks.get(0);
-        Optional<Book> bookFind = serviceBook.findById(book.getId());
-     */
+    @PostMapping(value = "/api/bookInfo/{id}/update")
+    public Mono updateStatusBook(@RequestBody int status,
+                                 @PathVariable("id") String id) {
+        return Mono.from(repositoryBook.findById(id).flatMap(book -> {
+            book.setStatus(status);
+            return repositoryBook.save(book).onErrorResume(throwable ->
+                    Mono.from(repositoryBook.findById(id)).log());
+        }));
+    }
 
+    @PostMapping(value = "/api/bookInfo/{id}/addcomment")
+    public Mono addComment(@RequestBody String textComment,
+                           @PathVariable("id") String id) {
+        return Mono.from(repositoryBook.findById(id).flatMap(book -> {
+            book.getComments().add(new Comment(textComment));
+            return repositoryBook.save(book).onErrorResume(throwable ->
+                    Mono.from(repositoryBook.findById(id)).log());
+        }));
+
+    }
 }
