@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>LIBRARY BOOKS</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .books, .books td {
+            border: 1px solid lightgray;
+            padding: 5px;
+        }
+    </style>
+
+    <style type="text/css">
+        .blockButtonAddNewBook {
+            width: 200px;
+            padding: 15px;
+            float: left;
+        }
+    </style>
+
+    <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+<h1>LIBRARY BOOKS</h1>
+<table class="books" border="1" width="600" bgcolor="#ffcc00">
+    <thead>
+    <tr>
+        <!--<th>ID</th>-->
+        <!--<th>Order</th>-->
+        <th>Name</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+<div class="blockButtonAddNewBook">
+    <a href="addBook" id="refAddBook">ADD NEW BOOK</a>
+</div>
+<script>
+    $(
+        function ()
+        {
+            $.get('/api/books').done(
+
+                function (books) {
+                    books.forEach(
+                        function (book) {
+                            $('tbody').append(`<tr>
+                        <!--<td style="visibility:hidden">${book.id}</td>-->
+                        <td>${book.name}</td>
+                        <td>${book.status}</td>
+                        <td>
+
+                            <a href="/bookInfo/${book.id}">Details</a>
+
+                        </td>
+                    </tr>
+                `)
+                        }
+
+                    );
+                }
+
+            )
+        }
+
+    );
+</script>
+<script>
+    let link;
+
+    link = document.getElementById('refAddBook');
+
+    link.onclick = function(e) {
+        e.preventDefault();
+        ajaxGetAddNewBook();
+    }
+
+    function ajaxGetAddNewBook() {
+        $.ajax({
+            type: "GET",
+            url: window.location.replace("/addNewBook"),
+            success: function (result) {
+                console.log(result);
+            },
+            error: function (e) {
+                alert("Error!")
+                console.log("ERROR: ", e);
+            }
+        });
+    }
+</script>
+</body>
+</html>

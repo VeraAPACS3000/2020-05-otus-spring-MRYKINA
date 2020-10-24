@@ -1,0 +1,13 @@
+spring:
+  data:
+    mongodb:
+      port: 0
+      database: test
+
+mongock:
+  change-logs-scan-package: ru.otus.spring.homework11.changelogs
+  runner-type: initializingbean
+
+logging:
+  level:
+    root: ERROR
