@@ -13,5 +13,5 @@
 8. homework_8 - домашнее задание 8 (MongoDB и spring-data)
 9. homework_9 - домашнее задание 9 (CRUD приложение с Web UI и хранением данных в БД)
 10. homework_10 - домашнее задание 10 (AJAX и REST-контроллеры)
-111 homework_10 - домашнее задание 11 (WebFlux)
+11. homework_11 - домашнее задание 11 (WebFlux)
 12. homework_12 - домашнее задание 12 (Spring Security: Механизмы аутентификации)
