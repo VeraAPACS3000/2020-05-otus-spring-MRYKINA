@@ -14,7 +14,7 @@ spring:
 
   shell:
     interactive:
-      enabled: false
+      enabled: true
 
   data:
     mongodb:
