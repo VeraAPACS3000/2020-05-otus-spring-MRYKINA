@@ -15,3 +15,6 @@
 10. homework_10 - домашнее задание 10 (AJAX и REST-контроллеры)
 11. homework_11 - домашнее задание 11 (WebFlux)
 12. homework_12 - домашнее задание 12 (Spring Security: Механизмы аутентификации)
+13. homework_13 - домашнее задание 13 Spring Security: ACL
+14. homework_14 - домашнее задание 14 Spring Batch
+15. homework_15 - домашнее задание 15 Spring Integration
