@@ -1,7 +1,8 @@
-package ru.otus.spring.homework15.services;
+package ru.otus.spring.homework14.services;
 
 import org.springframework.stereotype.Service;
-import ru.otus.spring.homework15.models.*;
+import ru.otus.spring.homework14.configuration.models.*;
+import ru.otus.spring.homework14.models.*;
 
 @Service
 public class ConvertToMongo {

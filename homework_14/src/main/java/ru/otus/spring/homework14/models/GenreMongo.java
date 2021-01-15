@@ -1,27 +1,33 @@
-package ru.otus.spring.homework15.models;
+package ru.otus.spring.homework14.models;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Id;
-
-@Document(collection = "authors")
-public class AuthorMongo {
+@Document(collection = "genres")
+public class GenreMongo {
 
     @Id
     private String id;
 
     private String name;
 
-    public AuthorMongo() {
-
+    public GenreMongo() {
     }
 
-    public AuthorMongo(String id, String nameAuthor) {
+    public GenreMongo(String id, String nameGenre) {
         this.id = id;
-        this.name = nameAuthor;
+        this.name = nameGenre;
     }
 
-    public AuthorMongo(String name) {
+    public GenreMongo(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -33,20 +39,12 @@ public class AuthorMongo {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
     @Override
     public String toString() {
-        return "AuthorMongo{" +
+        return "GenreMongo{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }
 }
+

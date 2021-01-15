@@ -1,4 +1,4 @@
-package ru.otus.spring.homework15.configuration;
+package ru.otus.spring.homework14;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -16,8 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import ru.otus.spring.homework15.models.*;
-import ru.otus.spring.homework15.services.ConvertToMongo;
+import ru.otus.spring.homework14.configuration.models.*;
+import ru.otus.spring.homework14.services.ConvertToMongo;
+import ru.otus.spring.homework14.models.*;
 
 import javax.persistence.EntityManager;
 

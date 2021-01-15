@@ -1,4 +1,4 @@
-package ru.otus.spring.homework15;
+package ru.otus.spring.homework14;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

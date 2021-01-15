@@ -1,4 +1,4 @@
-package ru.otus.spring.homework15.configuration;
+package ru.otus.spring.homework14;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

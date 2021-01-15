@@ -1,4 +1,4 @@
-package ru.otus.spring.homework15.configuration;
+package ru.otus.spring.homework14;
 
 import org.springframework.batch.core.configuration.JobRegistry;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;

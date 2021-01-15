@@ -1,4 +1,4 @@
-package ru.otus.spring.homework15.models;
+package ru.otus.spring.homework14.models;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;

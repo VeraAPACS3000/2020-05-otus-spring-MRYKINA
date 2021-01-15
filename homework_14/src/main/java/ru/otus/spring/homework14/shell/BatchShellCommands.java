@@ -1,4 +1,4 @@
-package ru.otus.spring.homework15.shell;
+package ru.otus.spring.homework14.shell;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
@@ -8,7 +8,7 @@ import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
-import static ru.otus.spring.homework15.configuration.JobConfiguration.IMPORT_DB;
+import static ru.otus.spring.homework14.JobConfiguration.IMPORT_DB;
 
 
 @ShellComponent
