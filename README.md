@@ -17,4 +17,4 @@
 12. homework_12 - домашнее задание 12 (Spring Security: Механизмы аутентификации)
 13.               домашнее задание 13 Spring Security: ACL (выполнено в рамках проекта https://github.com/VeraAPACS3000/2020-05-otus-spring-project-work-mrykina)
 14. homework_14 - домашнее задание 14 Spring Batch
-15. homework_15 - домашнее задание 15 Spring Integration
+15. homeworkSpringIntegration - домашнее задание 15 Spring Integration
