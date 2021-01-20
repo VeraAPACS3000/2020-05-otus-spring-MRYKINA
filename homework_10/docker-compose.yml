@@ -1,0 +1,16 @@
+version: '3.6'
+# Deploys Spring Web app (homework10) with in-memory persistence
+#
+# usage:
+# sudo docker-compose build
+# sudo docker-compose up
+
+services:
+
+  app:
+    image: app
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      - example=my value
