@@ -19,3 +19,5 @@
 14. homework_14 - домашнее задание 14 Spring Batch
 15. homeworkSpringIntegration - домашнее задание 15 Spring Integration
 16. поверх homework_10 - домашнее задание 16 Spring Boot Actuator
+17. поверх homework_10 - домашнее задание 17 Docker
+18. поверх homework_10 - домашнее задание 18 Hystrix, Eureka, Feign
