@@ -7,11 +7,7 @@ spring:
     generate-ddl: false
     hibernate:
       ddl-auto: none
-    show-sql: true
-
-  shell:
-    interactive:
-      enabled: true
+    show-sql: false
 
 logging:
   level:
