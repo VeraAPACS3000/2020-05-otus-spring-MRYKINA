@@ -1,0 +1,29 @@
+version: '3.6'
+# usage:
+# sudo docker-compose build
+# sudo docker-compose up
+
+services:
+  app:
+    image: app
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      - DB_URL=jdbc:h2://h2:8181/db
+      - DB_DRIVER=org.h2.Driver
+      - WAIT_FOR=h2:8181
+    depends_on:
+      - "h2"
+    networks:
+      - nw
+  h2:
+    container_name: 'h2'
+    hostname: 'h2'
+    image: 1000kit/h2
+    ports:
+      - "8181:8181"
+    networks:
+      - nw
+networks:
+  nw:

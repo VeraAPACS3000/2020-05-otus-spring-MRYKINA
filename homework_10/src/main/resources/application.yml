@@ -1,7 +1,7 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:testdb
-    initialization-mode: always
+  sdatasource:
+    url: ${DB_URL}
+    driver-class-name: ${DB_DRIVER}
 
   jpa:
     generate-ddl: false
@@ -29,4 +29,25 @@ management:
   health:
     defaults:
       enabled: true
+
+hystrix:
+  command:
+    getBooksKeys:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+      metrics:
+        rollingStats:
+          timeoutInMilliseconds: 20000
+      circuitBreaker:
+        requestVolumeThreshold: 10
+        errorThresholdPercentage: 50
+        sleepWindowInMilliseconds: 2000
+    getCommentsKeys:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+
 
