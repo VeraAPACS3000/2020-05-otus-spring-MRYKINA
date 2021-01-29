@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+<h1>Something went wrong! </h1>
+<div class="row">
+    <label for="id-output">Message error:</label>
+    <output id="id-output" name="message" type="text" th:text="${message}">error</output>
+</div>
+<a href="/">Go main page</a>
+</body>
+</html>

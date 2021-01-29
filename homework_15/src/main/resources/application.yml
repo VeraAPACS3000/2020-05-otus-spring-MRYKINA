@@ -1,0 +1,27 @@
+spring:
+  batch:
+    job:
+      enabled: false
+  datasource:
+    url: jdbc:h2:mem:testdb
+    initialization-mode: always
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+  shell:
+    interactive:
+      enabled: true
+
+  data:
+    mongodb:
+      database: mongoBatch2
+#mongock:
+ # runner-type: InitializingBean
+
+logging:
+  level:
+    ROOT: ERROR

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book info details</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        ol {
+            padding: 0;
+            list-style-position: inside;
+        }
+        .column {
+            float: left;
+            width: 30%;
+            padding: 10px;
+            height: 150px;
+        }
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        input:read-only {
+            background: lightgray;
+        }
+        .row {
+            margin-top: 10px;
+        }
+    </style>
+    <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="blockToBack">
+    <a href="back" id="refBack">BACK TO LIST BOOKS</a>
+</div>
+
+<input type="hidden" id="bookIdField" th:value="${id}"/>
+
+<form id="edit-form" th:method="post">
+   <div class="row">
+        <div class="column">
+            <h2>Book info:</h2>
+
+            <div class="row">
+                <label for="id-output">ID:</label>
+                <output id="id-output" name="id" type="text">1</output>
+            </div>
+
+            <div class="row">
+                <label for="name-output">Name:</label>
+                <output id="name-output" name="name" type="text">Litter to Onegin</output>
+            </div>
+
+            <div class="row">
+                <label for="author-output">Author:</label>
+                <output id="author-output" name="nameAuthor" type="text">Pushkin</output>
+            </div>
+
+            <div class="row">
+                <label for="genre-output">Genre:</label>
+                <output id="genre-output" name="nameGenre" type="text">Lyrics</output>
+            </div>
+
+            <div class="row">
+                <label for="status-input">Status:</label>
+                <input id="status-input" name="status" type="text"/>
+            </div>
+            <h2>Comments:</h2>
+            <ol id="comments" class="row"></ol>
+       </div>
+
+        <div class="column">
+            <h2>Actions</h2>
+            <input name="submit" id="submit1" type="submit" value="update status book">
+            <input name="submit" id="submit2" type="submit" value="delete book">
+            <p><b>Введите ваш отзыв:</b></p>
+            <p><textarea rows="10" cols="45" name="textComment" id="idTextComment"></textarea></p>
+            <input name="submit" id="submit3" type="submit" value="add comment">
+        </div>
+    </div>
+</form>
+<div id="getResultDiv" style="padding:20px 10px 20px 50px">
+    <ul class="list-group">
+    </ul>
+</div>
+</body>
+<script>
+        function loadBookInfo()
+        {
+            let jsBookId = $('#bookIdField').val();
+            $.get(`/api/bookInfo/${jsBookId}`).done(
+                function (book) {
+                    $('#id-output').text(book.id);
+                    $('#name-output').text(book.name);
+                    $('#author-output').text(book.nameAuthor);
+                    $('#genre-output').text(book.nameGenre);
+                    $('#status-input').val(book.status);
+
+                    $('#comments').empty();
+                    book.comments.forEach(function (comment, index) {
+                            $('#comments').append(`
+                                <li>${comment.textComment}</li>
+                            `)
+                        }
+                    );
+                }
+            )
+        }
+        $(
+            $( document ).ready(
+            loadBookInfo())
+        )
+</script>
+
+<script>
+
+    $( document ).ready(function() {
+        $('#submit1').click(function(event){
+            event.preventDefault();
+            ajaxPostUpdate();
+        });
+
+        $('#submit2').click(function(event){
+            event.preventDefault();
+            ajaxPostDelete();
+        });
+
+        $('#submit3').click(function(event){
+            event.preventDefault();
+            ajaxPostAddComment();
+        });
+
+        function ajaxPostUpdate(){
+
+            let status = $("#status-input").val();
+
+            $.ajax({
+                type : "POST",
+                contentType : "application/json",
+                url : "/api/bookInfo/"+ $('#bookIdField').val() + "/update",
+                data : JSON.stringify(status),
+                success : function(result) {
+                    if(result == "OK"){
+                       loadBookInfo();
+                    }
+                    console.log(result);
+                },
+                error : function(e) {
+                    alert("Error!")
+                    console.log("ERROR: ", e);
+                }
+            });
+        }
+
+        function ajaxPostAddComment(){
+
+            let textComment = $("#idTextComment").val();
+
+            $.ajax({
+
+                type : "POST",
+                contentType : "application/json",
+                url : "/api/bookInfo/"+ $('#bookIdField').val() + "/addcomment",
+                data : JSON.stringify(textComment),
+                success : loadBookInfo(),
+                error : function(e) {
+                    alert("Error!")
+                    console.log("ERROR: ", e);
+                }
+            });
+        }
+
+        function ajaxPostDelete(){
+            $.ajax({
+                type : "POST",
+                contentType : "application/json",
+                url : "/api/bookInfo/"+ $('#bookIdField').val() + "/deletebook",
+                success : function(result) {
+                    if(result == "OK"){
+                        alert("Delete book success!");
+                    }
+                    console.log(result);
+                }
+            });
+        }
+    }
+
+    )
+</script>
+
+<script>
+    let link;
+
+    link = document.getElementById('refBack');
+
+    link.onclick = function(e) {
+        e.preventDefault();
+        ajaxBackToList();
+    }
+
+    function ajaxBackToList() {
+        $.ajax({
+            type: "GET",
+            url: window.location.replace("/"),
+            success: function (result) {
+                console.log(result);
+            },
+            error: function (e) {
+                alert("Error!")
+                console.log("ERROR: ", e);
+            }
+        });
+    }
+</script>
+
+</html>
