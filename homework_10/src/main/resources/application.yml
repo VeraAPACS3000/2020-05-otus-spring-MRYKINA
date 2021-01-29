@@ -1,8 +1,10 @@
 spring:
-  sdatasource:
-    url: ${DB_URL}
-    driver-class-name: ${DB_DRIVER}
-
+  datasource:
+    url: jdbc:h2:mem:testdb
+    initialization-mode: always
+    #To check work Docker - to uncomment
+    #url: ${DB_URL}
+    #driver-class-name: ${DB_DRIVER}
   jpa:
     generate-ddl: false
     hibernate:
@@ -10,25 +12,12 @@ spring:
     show-sql: false
 
 logging:
-  #level:
-    #ROOT: ERROR
   file:
     name: demo.log
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    logfile:
-      enabled: true
-      external-file: demo.log
-    health:
-      show-details: always
-  health:
-    defaults:
-      enabled: true
+feign:
+  hystrix:
+    enabled: true
 
 hystrix:
   command:
@@ -49,5 +38,4 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 3000
-
 
